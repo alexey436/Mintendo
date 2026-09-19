@@ -13,7 +13,13 @@ import {
   Sparkles,
 } from 'lucide-react';
 
-export const PainPointsSection: React.FC = () => {
+interface PainPointsSectionProps {
+  onOpenConsultation?: () => void;
+}
+
+export const PainPointsSection: React.FC<PainPointsSectionProps> = ({
+  onOpenConsultation,
+}) => {
   const [activeTab, setActiveTab] = useState<'both' | 'solutions'>('both');
 
   const painIcons = [
@@ -42,20 +48,22 @@ export const PainPointsSection: React.FC = () => {
             </p>
 
             {/* Perspective switch buttons */}
-            <div className="mt-6 flex flex-col sm:inline-flex sm:flex-row p-1 rounded-xl bg-slate-900 border border-slate-800 shadow-inner w-full sm:w-auto gap-1">
+            <div className="mt-6 flex flex-col sm:inline-flex sm:flex-row p-1.5 rounded-2xl bg-slate-900 border border-slate-800 shadow-inner w-full sm:w-auto gap-1.5">
               <button
                 onClick={() => setActiveTab('both')}
-                className={`px-3.5 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all min-h-[40px] flex items-center justify-center ${
+                type="button"
+                className={`w-full sm:w-auto px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-xl transition-all min-h-[44px] flex items-center justify-center text-center leading-snug ${
                   activeTab === 'both'
                     ? 'bg-slate-800 text-white shadow'
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
-                Порівняння: Біль vs. Рішення
+                <span>Порівняння: Біль vs. Рішення</span>
               </button>
               <button
                 onClick={() => setActiveTab('solutions')}
-                className={`px-3.5 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg flex items-center justify-center gap-1.5 transition-all min-h-[40px] ${
+                type="button"
+                className={`w-full sm:w-auto px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-xl flex items-center justify-center gap-1.5 transition-all min-h-[44px] text-center leading-snug ${
                   activeTab === 'solutions'
                     ? 'bg-emerald-500 text-white shadow shadow-emerald-500/25'
                     : 'text-emerald-400 hover:text-emerald-300'
@@ -142,13 +150,25 @@ export const PainPointsSection: React.FC = () => {
                 Проведемо безкоштовний аудит помилок UX/CRO та швидкості вашого сайту за 24 години.
               </p>
             </div>
-            <a
-              href="#calculator"
-              className="shrink-0 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-emerald-300 bg-emerald-900/40 hover:bg-emerald-800/50 border border-emerald-700/50 transition-all flex items-center gap-2"
+            <button
+              type="button"
+              onClick={() => {
+                if (onOpenConsultation) {
+                  onOpenConsultation();
+                } else {
+                  const el = document.getElementById('contact');
+                  if (el) {
+                    el.scrollIntoView({ behavior: 'smooth' });
+                    const nameInput = el.querySelector('input') as HTMLInputElement | null;
+                    if (nameInput) setTimeout(() => nameInput.focus(), 400);
+                  }
+                }
+              }}
+              className="w-full sm:w-auto shrink-0 px-5 sm:px-6 py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 shadow-md shadow-emerald-500/25 active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
-              <span>Оцінити новий проєкт</span>
-              <ArrowRight className="w-4 h-4" />
-            </a>
+              <span>Замовити безкоштовний аудит</span>
+              <ArrowRight className="w-4 h-4 shrink-0 text-emerald-100" />
+            </button>
           </div>
         </ScrollReveal>
 

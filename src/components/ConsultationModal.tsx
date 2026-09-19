@@ -91,12 +91,16 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
                 <span>Mintendo Direct Request</span>
               </div>
               <h3 className="text-xl sm:text-2xl font-bold text-white font-['Plus_Jakarta_Sans']">
-                {presetData?.totalPrice
+                {presetData?.projectType === 'Безкоштовний аудит сайту'
+                  ? 'Безкоштовний аудит сайту за 24 години'
+                  : presetData?.totalPrice
                   ? 'Фіксація кошторису проєкту'
                   : 'Безкоштовна консультація з експертом'}
               </h3>
               <p className="text-xs sm:text-sm text-slate-300 mt-1">
-                Обговоримо цілі вашого бізнесу, розрахуємо точні дедлайни та підготуємо стратегію запуску.
+                {presetData?.projectType === 'Безкоштовний аудит сайту'
+                  ? 'Знайдемо критичні помилки UX, затримки завантаження та точки втрати клієнтів на вашому сайті.'
+                  : 'Обговоримо цілі вашого бізнесу, розрахуємо точні дедлайни та підготуємо стратегію запуску.'}
               </p>
             </div>
 
@@ -185,7 +189,11 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
                 </label>
                 <textarea
                   rows={2}
-                  placeholder="Потрібен сайт для залучення клієнтів з реклами..."
+                  placeholder={
+                    presetData?.projectType === 'Безкоштовний аудит сайту'
+                      ? 'Посилання на ваш діючий сайт або що саме турбує...'
+                      : 'Потрібен сайт для залучення клієнтів з реклами...'
+                  }
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   className="w-full px-4 py-2 rounded-xl bg-slate-800/80 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-emerald-500"
@@ -197,7 +205,11 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
                 className="w-full py-3.5 px-4 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 shadow-lg shadow-emerald-500/25 active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
               >
                 <Send className="w-4 h-4" />
-                <span>Отримати КП та консультацію</span>
+                <span>
+                  {presetData?.projectType === 'Безкоштовний аудит сайту'
+                    ? 'Замовити безкоштовний аудит'
+                    : 'Отримати КП та консультацію'}
+                </span>
               </button>
 
               <div className="flex items-center justify-center gap-1.5 text-[11px] text-slate-400 pt-1">

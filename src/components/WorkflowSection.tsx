@@ -71,7 +71,7 @@ export const WorkflowSection: React.FC = () => {
                     </span>
                   </div>
                   <div
-                    className={`text-xs font-bold line-clamp-1 ${
+                    className={`text-xs font-bold leading-snug break-words ${
                       isActive ? 'text-white' : 'text-slate-300'
                     }`}
                   >

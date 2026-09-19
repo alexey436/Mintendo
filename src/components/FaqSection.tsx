@@ -99,7 +99,8 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ onOpenConsultation }) =>
             </div>
             <button
               onClick={onOpenConsultation}
-              className="shrink-0 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-emerald-500 hover:bg-emerald-400 shadow-md transition-all cursor-pointer"
+              type="button"
+              className="w-full sm:w-auto shrink-0 px-5 sm:px-6 py-3 rounded-xl text-xs sm:text-sm font-semibold text-white bg-emerald-500 hover:bg-emerald-400 shadow-md transition-all cursor-pointer text-center"
             >
               Задати питання в чаті
             </button>

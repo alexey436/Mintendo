@@ -17,7 +17,6 @@ import { StickyMobileBar } from './components/StickyMobileBar';
 import { ConsultationModal } from './components/ConsultationModal';
 import { BackgroundVisuals } from './components/BackgroundVisuals';
 import { ScrollReveal } from './components/ScrollReveal';
-import { MobileVisualShowcase } from './components/MobileVisualShowcase';
 
 export default function App() {
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
@@ -74,15 +73,12 @@ export default function App() {
           onOpenConsultation={() => handleOpenConsultation()}
         />
 
-        {/* Mobile Visual Showcase (Rich visuals and interactive phone mockup) */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 sm:py-4">
-          <ScrollReveal direction="up" delay={0.05}>
-            <MobileVisualShowcase />
-          </ScrollReveal>
-        </section>
-
         {/* Pain Points Section */}
-        <PainPointsSection />
+        <PainPointsSection
+          onOpenConsultation={() =>
+            handleOpenConsultation({ projectType: 'Безкоштовний аудит сайту' })
+          }
+        />
 
         {/* Solutions & Core Advantages Section (Spotlight Cards) */}
         <SolutionFeaturesSection />

@@ -168,10 +168,11 @@ export const CasesSection: React.FC<CasesSectionProps> = ({
 
                   <button
                     onClick={() => onSelectCaseConsultation(item.title)}
-                    className="w-full py-2.5 px-4 rounded-xl text-xs font-semibold text-slate-200 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                    type="button"
+                    className="w-full py-3 px-4 rounded-xl text-xs sm:text-sm font-semibold text-slate-200 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 transition-colors flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <span>Хочу такий самий результат</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 text-emerald-400" />
+                    <ArrowUpRight className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                   </button>
                 </div>
               </div>

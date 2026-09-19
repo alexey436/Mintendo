@@ -184,7 +184,7 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({
                             {item.badge}
                           </span>
                         </div>
-                        <p className="text-xs text-slate-300 line-clamp-2 mb-3">
+                        <p className="text-xs text-slate-300 leading-relaxed mb-3">
                           {item.description}
                         </p>
                       </div>
