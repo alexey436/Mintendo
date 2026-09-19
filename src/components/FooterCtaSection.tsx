@@ -11,7 +11,11 @@ import {
   MessageCircle,
   Clock,
   Lock,
+  Loader2,
+  AlertCircle,
 } from 'lucide-react';
+import { sendLeadToTelegram } from '../utils/telegram';
+import { validateName, validateContact, sanitizeContactInput, sanitizeNameInput } from '../utils/validation';
 
 interface FooterCtaProps {
   initialProjectType?: string;
@@ -29,12 +33,126 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
     projectType: initialProjectType,
     comment: '',
   });
+  const [errors, setErrors] = useState<{ name?: string; contact?: string }>({});
+  const [touched, setTouched] = useState<{ name?: boolean; contact?: boolean }>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [finalContactDisplay, setFinalContactDisplay] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleChannelChange = (newChannel: string) => {
+    setFormData((prev) => {
+      let nextContact = prev.contact;
+      if (newChannel === 'phone' || newChannel === 'whatsapp') {
+        if (!nextContact || nextContact === '+380' || nextContact === '+380 ') {
+          nextContact = '+380 ';
+        } else {
+          nextContact = sanitizeContactInput(nextContact, newChannel);
+        }
+      } else {
+        // Telegram mode
+        if (nextContact === '+380' || nextContact === '+380 ') {
+          nextContact = '';
+        }
+      }
+
+      return {
+        ...prev,
+        preferredChannel: newChannel,
+        contact: nextContact,
+      };
+    });
+
+    if (touched.contact && formData.contact) {
+      const sanitized = sanitizeContactInput(formData.contact, newChannel);
+      const v = validateContact(sanitized, newChannel);
+      setErrors((prev) => ({ ...prev, contact: v.error }));
+    }
+  };
+
+  const handleContactFocus = () => {
+    if (
+      (formData.preferredChannel === 'phone' || formData.preferredChannel === 'whatsapp') &&
+      (!formData.contact || formData.contact.trim() === '')
+    ) {
+      setFormData((prev) => ({ ...prev, contact: '+380 ' }));
+    }
+  };
+
+  const handleNameChange = (val: string) => {
+    const hasDigits = /\d/.test(val);
+    const sanitized = sanitizeNameInput(val);
+    setFormData((prev) => ({ ...prev, name: sanitized }));
+
+    if (hasDigits) {
+      setErrors((prev) => ({ ...prev, name: "Ім'я має складатися тільки з букв (без цифр)" }));
+      setTouched((prev) => ({ ...prev, name: true }));
+      return;
+    }
+
+    if (touched.name) {
+      const v = validateName(sanitized);
+      setErrors((prev) => ({ ...prev, name: v.error }));
+    }
+  };
+
+  const handleContactChange = (val: string) => {
+    const sanitized = sanitizeContactInput(val, formData.preferredChannel);
+    setFormData((prev) => ({ ...prev, contact: sanitized }));
+    if (touched.contact) {
+      const v = validateContact(sanitized, formData.preferredChannel);
+      setErrors((prev) => ({ ...prev, contact: v.error }));
+    }
+  };
+
+  const handleNameBlur = () => {
+    setTouched((prev) => ({ ...prev, name: true }));
+    const v = validateName(formData.name);
+    setErrors((prev) => ({ ...prev, name: v.error }));
+  };
+
+  const handleContactBlur = () => {
+    setTouched((prev) => ({ ...prev, contact: true }));
+    const v = validateContact(formData.contact, formData.preferredChannel);
+    setErrors((prev) => ({ ...prev, contact: v.error }));
+  };
+
+  const contactValidation = validateContact(formData.contact, formData.preferredChannel);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name.trim() || !formData.contact.trim()) return;
-    setIsSubmitted(true);
+
+    const nameV = validateName(formData.name);
+    const contactV = validateContact(formData.contact, formData.preferredChannel);
+
+    setTouched({ name: true, contact: true });
+    setErrors({
+      name: nameV.error,
+      contact: contactV.error,
+    });
+
+    if (!nameV.isValid || !contactV.isValid || isSubmitting) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setFinalContactDisplay(contactV.formatted);
+
+    try {
+      await sendLeadToTelegram({
+        name: formData.name.trim(),
+        contact: contactV.formatted,
+        preferredChannel: formData.preferredChannel,
+        projectType: formData.projectType,
+        comment: formData.comment.trim(),
+        budget: initialEstimate,
+        source: 'Контактна форма у футері',
+      });
+    } catch (err) {
+      console.error('Error submitting footer lead:', err);
+    } finally {
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+    }
   };
 
   return (
@@ -76,11 +194,22 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
                   Дякуємо! Вашу заявку прийнято
                 </h3>
                 <p className="text-sm text-slate-300 max-w-md mx-auto">
-                  Тімлід Mintendo вже вивчає інформацію. Ми зв'яжемося з вами через <strong>{formData.contact}</strong> протягом 15 хвилин у робочий час.
+                  Тімлід Mintendo вже вивчає інформацію. Ми зв'яжемося з вами через <strong className="text-emerald-400 font-mono">{finalContactDisplay || formData.contact}</strong> протягом 15 хвилин у робочий час.
                 </p>
                 <div className="pt-4">
                   <button
-                    onClick={() => setIsSubmitted(false)}
+                    onClick={() => {
+                      setIsSubmitted(false);
+                      setFormData({
+                        name: '',
+                        contact: '',
+                        preferredChannel: 'telegram',
+                        projectType: initialProjectType,
+                        comment: '',
+                      });
+                      setErrors({});
+                      setTouched({});
+                    }}
                     className="text-xs text-emerald-400 hover:underline cursor-pointer"
                   >
                     Відправити ще одну заявку
@@ -88,7 +217,7 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
                 </div>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+              <form onSubmit={handleSubmit} noValidate className="space-y-4 sm:space-y-5">
                 <div className="flex items-center justify-between pb-3 border-b border-slate-800">
                   <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
                     Заявка на розрахунок проєкту / аудит
@@ -106,26 +235,85 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
                     </label>
                     <input
                       type="text"
-                      required
                       placeholder="Олексій"
                       value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-slate-800/80 border border-slate-700 text-white placeholder-slate-500 text-base sm:text-sm focus:outline-none focus:border-emerald-500 transition-colors"
+                      onChange={(e) => handleNameChange(e.target.value)}
+                      onBlur={handleNameBlur}
+                      className={`w-full px-4 py-3 rounded-xl text-white placeholder-slate-500 text-base sm:text-sm focus:outline-none transition-colors border ${
+                        touched.name && errors.name
+                          ? 'bg-rose-950/20 border-rose-500/80 focus:border-rose-400'
+                          : touched.name && !errors.name && formData.name.trim()
+                          ? 'bg-emerald-950/20 border-emerald-500/60 focus:border-emerald-400'
+                          : 'bg-slate-800/80 border-slate-700 focus:border-emerald-500'
+                      }`}
                     />
+                    {touched.name && errors.name ? (
+                      <p className="text-xs text-rose-400 mt-1.5 flex items-center gap-1.5">
+                        <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                        <span>{errors.name}</span>
+                      </p>
+                    ) : (
+                      <p className="text-[10px] text-slate-500 mt-1.5">
+                        Тільки букви (без цифр та спецсимволів)
+                      </p>
+                    )}
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                      Телефон або Telegram нік *
-                    </label>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="text-xs font-semibold text-slate-300">
+                        {formData.preferredChannel === 'telegram'
+                          ? 'Telegram нікнейм або телефон *'
+                          : formData.preferredChannel === 'phone'
+                          ? 'Номер телефону (тільки цифри) *'
+                          : 'Номер WhatsApp (тільки цифри) *'}
+                      </label>
+                      {formData.contact && contactValidation.isValid && (
+                        <span className="text-[10px] text-emerald-400 font-medium">
+                          ✓ Формат вірний
+                        </span>
+                      )}
+                    </div>
                     <input
                       type="text"
-                      required
-                      placeholder="+38 (0__) ___-__-__ або @username"
+                      placeholder={
+                        formData.preferredChannel === 'telegram'
+                          ? '@username (латиницею) або +380 (44) 123-12-31'
+                          : '+380 (44) 123-12-31'
+                      }
                       value={formData.contact}
-                      onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-slate-800/80 border border-slate-700 text-white placeholder-slate-500 text-base sm:text-sm focus:outline-none focus:border-emerald-500 transition-colors"
+                      onFocus={handleContactFocus}
+                      onChange={(e) => handleContactChange(e.target.value)}
+                      onBlur={handleContactBlur}
+                      className={`w-full px-4 py-3 rounded-xl text-white placeholder-slate-500 text-base sm:text-sm focus:outline-none transition-colors border font-mono ${
+                        touched.contact && errors.contact
+                          ? 'bg-rose-950/20 border-rose-500/80 focus:border-rose-400'
+                          : touched.contact && !errors.contact && formData.contact.trim() && formData.contact !== '+380 '
+                          ? 'bg-emerald-950/20 border-emerald-500/60 focus:border-emerald-400'
+                          : 'bg-slate-800/80 border-slate-700 focus:border-emerald-500'
+                      }`}
                     />
+                    {touched.contact && errors.contact ? (
+                      <p className="text-xs text-rose-400 mt-1.5 flex items-center gap-1.5">
+                        <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                        <span>{errors.contact}</span>
+                      </p>
+                    ) : formData.contact && contactValidation.isValid ? (
+                      <p className="text-[11px] text-emerald-400 mt-1.5 flex items-center gap-1.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+                        <span>
+                          {contactValidation.type === 'phone'
+                            ? `Номер підтверджено: ${contactValidation.formatted}`
+                            : `Telegram підтверджено: ${contactValidation.formatted}`}
+                        </span>
+                      </p>
+                    ) : (
+                      <p className="text-[10px] text-slate-500 mt-1.5">
+                        {formData.preferredChannel === 'telegram'
+                          ? 'Введіть @нікнейм у Telegram або номер у форматі +380 (44) 123-12-31'
+                          : 'Формат номеру: +380 (44) 123-12-31 (введіть 9 цифр після коду)'}
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -161,10 +349,10 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
                         <button
                           key={item.id}
                           type="button"
-                          onClick={() => setFormData({ ...formData, preferredChannel: item.id })}
+                          onClick={() => handleChannelChange(item.id)}
                           className={`py-2.5 text-xs font-semibold rounded-lg border transition-all cursor-pointer ${
                             formData.preferredChannel === item.id
-                              ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/50'
+                              ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/50 shadow-sm'
                               : 'bg-slate-800 text-slate-400 border-slate-700 hover:text-white'
                           }`}
                         >
@@ -191,10 +379,20 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
                 <button
                   type="submit"
                   id="footer-submit-btn"
-                  className="w-full py-4 px-6 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 shadow-lg shadow-emerald-500/25 active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  disabled={isSubmitting}
+                  className="w-full py-4 px-6 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 disabled:opacity-60 disabled:cursor-not-allowed shadow-lg shadow-emerald-500/25 active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <Send className="w-4 h-4" />
-                  <span>Відправити запит на розрахунок</span>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>Відправляємо запит...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      <span>Відправити запит на розрахунок</span>
+                    </>
+                  )}
                 </button>
 
                 <div className="flex items-center justify-center gap-2 text-[11px] text-slate-500 text-center pt-2">
@@ -241,7 +439,7 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
                 </a>
 
                 <a
-                  href="https://wa.me/380990000000"
+                  href="https://wa.me/380935938981"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-3.5 rounded-xl bg-emerald-600/10 hover:bg-emerald-600/20 border border-emerald-500/30 text-emerald-300 hover:text-white flex items-center justify-between transition-all group"
@@ -252,14 +450,14 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
                     </div>
                     <div>
                       <div className="text-xs font-bold">Написати у WhatsApp</div>
-                      <div className="text-[10px] text-slate-400">Швидка консультація</div>
+                      <div className="text-[10px] text-slate-400">+38 (093) 593-89-81</div>
                     </div>
                   </div>
                   <ArrowRight className="w-4 h-4 text-emerald-400 group-hover:translate-x-1 transition-transform" />
                 </a>
 
                 <a
-                  href="tel:+380990000000"
+                  href="tel:+380935938981"
                   className="p-3.5 rounded-xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700 text-slate-200 hover:text-white flex items-center justify-between transition-all group"
                 >
                   <div className="flex items-center gap-3">
@@ -267,7 +465,7 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
                       <PhoneCall className="w-4 h-4" />
                     </div>
                     <div>
-                      <div className="text-xs font-bold">+38 (099) 000-00-00</div>
+                      <div className="text-xs font-bold">+38 (093) 593-89-81</div>
                       <div className="text-[10px] text-slate-400">Прямий номер студії (09:00 - 19:00)</div>
                     </div>
                   </div>

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { X, Send, CheckCircle2, ShieldCheck, Clock, Sparkles } from 'lucide-react';
+import { X, Send, CheckCircle2, ShieldCheck, Clock, Sparkles, Loader2, AlertCircle } from 'lucide-react';
+import { sendLeadToTelegram } from '../utils/telegram';
+import { validateName, validateContact, sanitizeContactInput, sanitizeNameInput } from '../utils/validation';
 
 interface ConsultationModalProps {
   isOpen: boolean;
@@ -23,7 +25,11 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
   const [contact, setContact] = useState('');
   const [channel, setChannel] = useState('telegram');
   const [message, setMessage] = useState('');
+  const [errors, setErrors] = useState<{ name?: string; contact?: string }>({});
+  const [touched, setTouched] = useState<{ name?: boolean; contact?: boolean }>({});
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [finalContactDisplay, setFinalContactDisplay] = useState('');
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -43,10 +49,119 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Handle channel change: re-sanitize contact if switching to phone
+  const handleChannelChange = (newChannel: string) => {
+    setChannel(newChannel);
+    if (newChannel === 'phone' || newChannel === 'whatsapp') {
+      if (!contact || contact === '+380' || contact === '+380 ') {
+        setContact('+380 ');
+      } else {
+        const sanitized = sanitizeContactInput(contact, newChannel);
+        setContact(sanitized);
+        if (touched.contact) {
+          const v = validateContact(sanitized, newChannel);
+          setErrors((prev) => ({ ...prev, contact: v.error }));
+        }
+      }
+    } else {
+      // Telegram mode
+      if (contact === '+380' || contact === '+380 ') {
+        setContact('');
+        setErrors((prev) => ({ ...prev, contact: undefined }));
+      }
+    }
+  };
+
+  const handleNameChange = (val: string) => {
+    const hasDigits = /\d/.test(val);
+    const sanitized = sanitizeNameInput(val);
+    setName(sanitized);
+
+    if (hasDigits) {
+      setErrors((prev) => ({ ...prev, name: "Ім'я має складатися тільки з букв (без цифр)" }));
+      setTouched((prev) => ({ ...prev, name: true }));
+      return;
+    }
+
+    if (touched.name) {
+      const v = validateName(sanitized);
+      setErrors((prev) => ({ ...prev, name: v.error }));
+    }
+  };
+
+  const handleContactChange = (val: string) => {
+    const sanitized = sanitizeContactInput(val, channel);
+    setContact(sanitized);
+    if (touched.contact) {
+      const v = validateContact(sanitized, channel);
+      setErrors((prev) => ({ ...prev, contact: v.error }));
+    }
+  };
+
+  const handleContactFocus = () => {
+    if ((channel === 'phone' || channel === 'whatsapp') && (!contact || contact.trim() === '')) {
+      setContact('+380 ');
+    }
+  };
+
+  const handleNameBlur = () => {
+    setTouched((prev) => ({ ...prev, name: true }));
+    const v = validateName(name);
+    setErrors((prev) => ({ ...prev, name: v.error }));
+  };
+
+  const handleContactBlur = () => {
+    setTouched((prev) => ({ ...prev, contact: true }));
+    const v = validateContact(contact, channel);
+    setErrors((prev) => ({ ...prev, contact: v.error }));
+  };
+
+  // Real-time validation info for contact
+  const contactValidation = validateContact(contact, channel);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !contact.trim()) return;
-    setSubmitted(true);
+
+    const nameV = validateName(name);
+    const contactV = validateContact(contact, channel);
+
+    setTouched({ name: true, contact: true });
+    setErrors({
+      name: nameV.error,
+      contact: contactV.error,
+    });
+
+    if (!nameV.isValid || !contactV.isValid || isSubmitting) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setFinalContactDisplay(contactV.formatted);
+
+    try {
+      await sendLeadToTelegram({
+        name: name.trim(),
+        contact: contactV.formatted,
+        preferredChannel: channel,
+        message: message.trim(),
+        projectType: presetData?.projectType || (presetData?.totalPrice ? 'Калькулятор вартості' : 'Консультація з експертом'),
+        budget: presetData?.totalPrice,
+        timeline: presetData?.totalDays ? `${presetData.totalDays} днів` : undefined,
+        selectedOptions: presetData?.selectedModules,
+        source: presetData?.projectType === 'Безкоштовний аудит сайту'
+          ? 'Кнопка: Безкоштовний аудит сайту'
+          : presetData?.sourceCase
+          ? `Кейс: ${presetData.sourceCase}`
+          : presetData?.totalPrice
+          ? 'Калькулятор вартості'
+          : 'Модальне вікно',
+      });
+    } catch (err) {
+      console.error('Error submitting form:', err);
+    } finally {
+      setIsSubmitting(false);
+      setSubmitted(true);
+    }
   };
 
   return (
@@ -72,7 +187,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
               Запит зафіксовано!
             </h3>
             <p className="text-sm text-slate-300">
-              Дякуємо, <strong>{name}</strong>. Тімлід Mintendo зв'яжеться з вами за вказаним контактом <strong>{contact}</strong> протягом 15 хвилин для узгодження деталей.
+              Дякуємо, <strong>{name}</strong>. Тімлід Mintendo зв'яжеться з вами за вказаним контактом <strong className="text-emerald-400">{finalContactDisplay || contact}</strong> протягом 15 хвилин для узгодження деталей.
             </p>
             <div className="pt-4">
               <button
@@ -128,38 +243,40 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} noValidate className="space-y-4">
               <div>
                 <label className="block text-xs font-semibold text-slate-300 mb-1">
                   Ваше ім'я *
                 </label>
                 <input
                   type="text"
-                  required
                   placeholder="Олександр"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-800/80 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-emerald-500"
+                  onChange={(e) => handleNameChange(e.target.value)}
+                  onBlur={handleNameBlur}
+                  className={`w-full px-4 py-2.5 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none transition-colors border ${
+                    touched.name && errors.name
+                      ? 'bg-rose-950/20 border-rose-500/80 focus:border-rose-400'
+                      : touched.name && !errors.name && name.trim()
+                      ? 'bg-emerald-950/20 border-emerald-500/60 focus:border-emerald-400'
+                      : 'bg-slate-800/80 border-slate-700 focus:border-emerald-500'
+                  }`}
                 />
+                {touched.name && errors.name ? (
+                  <p className="text-xs text-rose-400 mt-1 flex items-center gap-1.5">
+                    <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                    <span>{errors.name}</span>
+                  </p>
+                ) : (
+                  <p className="text-[10px] text-slate-500 mt-1">
+                    Тільки букви (без цифр та спецсимволів)
+                  </p>
+                )}
               </div>
 
               <div>
                 <label className="block text-xs font-semibold text-slate-300 mb-1">
-                  Телефон або Telegram нік *
-                </label>
-                <input
-                  type="text"
-                  required
-                  placeholder="+38 (0__) ___-__-__ або @username"
-                  value={contact}
-                  onChange={(e) => setContact(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-800/80 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-emerald-500"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
-                  Канал для зв'язку
+                  Спосіб зв'язку
                 </label>
                 <div className="grid grid-cols-3 gap-2">
                   {[
@@ -170,10 +287,10 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
                     <button
                       key={ch.id}
                       type="button"
-                      onClick={() => setChannel(ch.id)}
-                      className={`py-2 text-xs font-semibold rounded-lg border transition-all ${
+                      onClick={() => handleChannelChange(ch.id)}
+                      className={`py-2 text-xs font-semibold rounded-lg border transition-all cursor-pointer ${
                         channel === ch.id
-                          ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/50'
+                          ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/50 shadow-sm'
                           : 'bg-slate-800 text-slate-400 border-slate-700 hover:text-white'
                       }`}
                     >
@@ -181,6 +298,63 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
                     </button>
                   ))}
                 </div>
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="text-xs font-semibold text-slate-300">
+                    {channel === 'telegram'
+                      ? 'Telegram нікнейм або телефон *'
+                      : channel === 'phone'
+                      ? 'Номер телефону (тільки цифри) *'
+                      : 'Номер WhatsApp (тільки цифри) *'}
+                  </label>
+                  {contact && contactValidation.isValid && (
+                    <span className="text-[10px] text-emerald-400 font-medium">
+                      ✓ Формат вірний
+                    </span>
+                  )}
+                </div>
+                <input
+                  type="text"
+                  placeholder={
+                    channel === 'telegram'
+                      ? '@username (латиницею) або +380 (44) 123-12-31'
+                      : '+380 (44) 123-12-31'
+                  }
+                  value={contact}
+                  onFocus={handleContactFocus}
+                  onChange={(e) => handleContactChange(e.target.value)}
+                  onBlur={handleContactBlur}
+                  className={`w-full px-4 py-2.5 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none transition-colors border font-mono ${
+                    touched.contact && errors.contact
+                      ? 'bg-rose-950/20 border-rose-500/80 focus:border-rose-400'
+                      : touched.contact && !errors.contact && contact.trim() && contact !== '+380 '
+                      ? 'bg-emerald-950/20 border-emerald-500/60 focus:border-emerald-400'
+                      : 'bg-slate-800/80 border-slate-700 focus:border-emerald-500'
+                  }`}
+                />
+                {touched.contact && errors.contact ? (
+                  <p className="text-xs text-rose-400 mt-1 flex items-center gap-1.5">
+                    <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                    <span>{errors.contact}</span>
+                  </p>
+                ) : contact && contactValidation.isValid ? (
+                  <p className="text-[11px] text-emerald-400 mt-1 flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+                    <span>
+                      {contactValidation.type === 'phone'
+                        ? `Номер підтверджено: ${contactValidation.formatted}`
+                        : `Telegram підтверджено: ${contactValidation.formatted}`}
+                    </span>
+                  </p>
+                ) : (
+                  <p className="text-[10px] text-slate-500 mt-1">
+                    {channel === 'telegram'
+                      ? 'Введіть @нікнейм у Telegram або номер у форматі +380 (44) 123-12-31'
+                      : 'Формат номеру: +380 (44) 123-12-31 (введіть 9 цифр після коду)'}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -202,14 +376,24 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
 
               <button
                 type="submit"
-                className="w-full py-3.5 px-4 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 shadow-lg shadow-emerald-500/25 active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
+                disabled={isSubmitting}
+                className="w-full py-3.5 px-4 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 disabled:opacity-60 disabled:cursor-not-allowed shadow-lg shadow-emerald-500/25 active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
               >
-                <Send className="w-4 h-4" />
-                <span>
-                  {presetData?.projectType === 'Безкоштовний аудит сайту'
-                    ? 'Замовити безкоштовний аудит'
-                    : 'Отримати КП та консультацію'}
-                </span>
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>Відправляємо заявку...</span>
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4" />
+                    <span>
+                      {presetData?.projectType === 'Безкоштовний аудит сайту'
+                        ? 'Замовити безкоштовний аудит'
+                        : 'Отримати КП та консультацію'}
+                    </span>
+                  </>
+                )}
               </button>
 
               <div className="flex items-center justify-center gap-1.5 text-[11px] text-slate-400 pt-1">

@@ -8,6 +8,7 @@ import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { PainPointsSection } from './components/PainPointsSection';
 import { SolutionFeaturesSection } from './components/SolutionFeaturesSection';
+import { AboutSection } from './components/AboutSection';
 import { CalculatorSection } from './components/CalculatorSection';
 import { CasesSection } from './components/CasesSection';
 import { WorkflowSection } from './components/WorkflowSection';
@@ -82,6 +83,12 @@ export default function App() {
 
         {/* Solutions & Core Advantages Section (Spotlight Cards) */}
         <SolutionFeaturesSection />
+
+        {/* About Us / Experience & Stats (3 years, 85+ projects, principles) */}
+        <AboutSection
+          onOpenConsultation={() => handleOpenConsultation()}
+          onScrollToCalculator={scrollToCalculator}
+        />
 
         {/* Interactive Cost & Timeline Calculator */}
         <CalculatorSection onSelectCalculation={handleCalculationSelect} />

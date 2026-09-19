@@ -24,6 +24,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const navLinks = [
     { name: 'Болі & Рішення', href: '#pain-points' },
     { name: 'Переваги', href: '#features' },
+    { name: 'Про нас', href: '#about' },
     { name: 'Калькулятор', href: '#calculator' },
     { name: 'Кейси', href: '#cases' },
     { name: 'Процес', href: '#workflow' },
@@ -77,13 +78,23 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Desktop CTAs */}
         <div className="hidden sm:flex items-center gap-3">
+          {/* Direct Phone link */}
+          <a
+            href="tel:+380935938981"
+            className="hidden xl:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-200 hover:text-white bg-slate-900/70 hover:bg-slate-800 border border-slate-700/70 rounded-lg transition-all"
+            title="Зателефонувати: +38 (093) 593-89-81"
+          >
+            <PhoneCall className="w-3.5 h-3.5 text-emerald-400" />
+            <span>+38 (093) 593-89-81</span>
+          </a>
+
           {/* Quick Telegram link */}
           <a
             href="https://t.me/mintendo_studio"
             target="_blank"
             rel="noopener noreferrer"
             id="nav-telegram-btn"
-            className="hidden xl:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-slate-300 hover:text-white bg-slate-900/60 hover:bg-slate-800 border border-slate-700/60 rounded-lg transition-all"
+            className="hidden 2xl:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-slate-300 hover:text-white bg-slate-900/60 hover:bg-slate-800 border border-slate-700/60 rounded-lg transition-all"
             title="Швидкий чат у Telegram"
           >
             <Send className="w-3.5 h-3.5 text-blue-400" />
@@ -158,6 +169,25 @@ export const Navbar: React.FC<NavbarProps> = ({
               <PhoneCall className="w-4 h-4" />
               <span>Консультація</span>
             </button>
+          </div>
+
+          <div className="pt-2 flex items-center justify-between px-2 text-xs">
+            <a
+              href="tel:+380935938981"
+              className="flex items-center gap-1.5 text-emerald-400 font-semibold hover:underline"
+            >
+              <PhoneCall className="w-3.5 h-3.5" />
+              <span>+38 (093) 593-89-81</span>
+            </a>
+            <a
+              href="https://t.me/mintendo_studio"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-blue-400 font-medium hover:underline"
+            >
+              <Send className="w-3.5 h-3.5" />
+              <span>@mintendo_studio</span>
+            </a>
           </div>
         </div>
       )}
