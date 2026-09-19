@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'motion/react';
 import {
   ArrowRight,
   Calculator,
@@ -10,6 +11,8 @@ import {
   CheckCircle2,
   Clock,
   Code2,
+  Layers,
+  Smartphone,
 } from 'lucide-react';
 
 interface HeroSectionProps {
@@ -22,35 +25,26 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onOpenConsultation,
 }) => {
   return (
-    <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
+    <section className="relative pt-24 pb-16 md:pt-36 md:pb-24 overflow-hidden">
       {/* Background ambient lighting */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] sm:w-[900px] h-[450px] bg-gradient-to-tr from-emerald-500/15 via-blue-600/10 to-teal-400/5 blur-[120px] pointer-events-none rounded-full" />
       <div className="absolute top-20 right-10 w-72 h-72 bg-blue-500/10 blur-[90px] pointer-events-none rounded-full" />
-      
-      {/* Subtle grid pattern */}
-      <div 
-        className="absolute inset-0 opacity-[0.03] pointer-events-none"
-        style={{
-          backgroundImage: `radial-gradient(#ffffff 1px, transparent 1px)`,
-          backgroundSize: '28px 28px'
-        }}
-      />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center">
           
           {/* Left Column: Value Proposition & CTAs */}
           <div className="lg:col-span-7 flex flex-col text-left">
             {/* Top Eyebrow Tag */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/90 border border-emerald-500/30 text-emerald-400 text-xs font-semibold tracking-wide w-fit mb-6 shadow-sm shadow-emerald-950">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Студія веб-розробки та конверсії • Mintendo</span>
+            <div className="inline-flex flex-wrap items-center gap-1.5 sm:gap-2 px-3 py-1.5 rounded-full bg-slate-900/90 border border-emerald-500/30 text-emerald-400 text-[11px] sm:text-xs font-semibold tracking-wide w-fit mb-5 sm:mb-6 shadow-sm shadow-emerald-950">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+              <span>Студія веб-розробки • Mintendo</span>
               <span className="text-slate-600">|</span>
-              <span className="text-slate-300">Гарантія результату в договорі</span>
+              <span className="text-slate-300">Гарантія результату та термінів</span>
             </div>
 
             {/* Exact H1 from prompt */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-extrabold text-white tracking-tight leading-[1.15] mb-6 font-['Plus_Jakarta_Sans']">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-extrabold text-white tracking-tight leading-[1.2] sm:leading-[1.15] mb-5 sm:mb-6 font-['Plus_Jakarta_Sans']">
               Сайти для бізнесу від{' '}
               <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-blue-400 bg-clip-text text-transparent">
                 Mintendo
@@ -59,33 +53,56 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </h1>
 
             {/* Subtitle from prompt */}
-            <p className="text-base sm:text-lg md:text-xl text-slate-300 font-normal leading-relaxed mb-8 max-w-2xl">
+            <p className="text-sm sm:text-base md:text-xl text-slate-300 font-normal leading-relaxed mb-6 sm:mb-8 max-w-2xl">
               Розробка під ключ із фокусом на UX, SEO та високу конверсію (CRO). Фіксовані терміни, прозора вартість та підтримка після запуску.
             </p>
 
             {/* Primary & Secondary Action CTAs */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-10">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
               <button
                 onClick={onScrollToCalculator}
                 id="hero-calc-cta"
-                className="group relative inline-flex items-center justify-center gap-3 px-7 py-4 text-base font-bold text-white bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 hover:from-emerald-400 hover:to-teal-500 rounded-xl shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 active:scale-[0.98] transition-all cursor-pointer"
+                className="group relative inline-flex items-center justify-center gap-2.5 sm:gap-3 px-6 sm:px-7 py-3.5 sm:py-4 text-sm sm:text-base font-bold text-white bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 hover:from-emerald-400 hover:to-teal-500 rounded-xl shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 active:scale-[0.98] transition-all cursor-pointer min-h-[48px]"
               >
-                <Calculator className="w-5 h-5 text-emerald-100 group-hover:rotate-12 transition-transform" />
+                <Calculator className="w-5 h-5 text-emerald-100 group-hover:rotate-12 transition-transform shrink-0" />
                 <span>Розрахувати вартість сайту</span>
-                <ArrowRight className="w-4 h-4 text-emerald-200 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 text-emerald-200 group-hover:translate-x-1 transition-transform shrink-0" />
               </button>
 
               <button
                 onClick={onOpenConsultation}
                 id="hero-consult-cta"
-                className="inline-flex items-center justify-center gap-2.5 px-6 py-4 text-base font-semibold text-slate-200 hover:text-white bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 hover:border-slate-600 rounded-xl transition-all cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3.5 sm:py-4 text-sm sm:text-base font-semibold text-slate-200 hover:text-white bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 hover:border-slate-600 rounded-xl transition-all cursor-pointer min-h-[48px]"
               >
                 <span>Отримати консультацію</span>
               </button>
             </div>
 
+            {/* Visual Tech Stack Pills (Extra Visual Appeal for Mobile & Desktop) */}
+            <div className="flex flex-wrap items-center gap-2 mb-6">
+              <span className="text-[11px] font-mono uppercase text-slate-400 font-semibold mr-1">
+                Стек технологій:
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900/80 border border-slate-800 text-[11px] text-slate-300 font-medium">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                React 19 / Next.js
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900/80 border border-slate-800 text-[11px] text-slate-300 font-medium">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                Tailwind CSS
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900/80 border border-slate-800 text-[11px] text-slate-300 font-medium">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                Schema.org SEO
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900/80 border border-slate-800 text-[11px] text-slate-300 font-medium">
+                <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+                100% Mobile Ready
+              </span>
+            </div>
+
             {/* Key Value Guarantees (Trust Badges) */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-slate-800/80">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 pt-5 sm:pt-6 border-t border-slate-800/80">
               <div className="flex items-center gap-2">
                 <div className="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-400">
                   <Zap className="w-4 h-4" />
@@ -132,19 +149,23 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {/* Right Column: Interactive Live Showcase Preview Card */}
           <div className="lg:col-span-5 relative">
             {/* Outer card frame with glassmorphism */}
-            <div className="relative rounded-2xl bg-gradient-to-b from-slate-800/80 to-slate-950/90 border border-slate-700/80 p-5 sm:p-6 shadow-2xl shadow-black/50 backdrop-blur-sm">
+            <motion.div
+              animate={{ y: [0, -6, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+              className="relative rounded-2xl bg-gradient-to-b from-slate-800/80 to-slate-950/90 border border-slate-700/80 p-4 sm:p-6 shadow-2xl shadow-black/50 backdrop-blur-sm"
+            >
               
               {/* Browser Header Bar */}
-              <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-800">
-                <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-rose-500/80" />
-                  <span className="w-3 h-3 rounded-full bg-amber-500/80" />
-                  <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
-                  <span className="ml-2 text-xs font-mono text-slate-400 bg-slate-900 px-2.5 py-0.5 rounded border border-slate-800">
-                    https://mintendo.agency/live-audit
+              <div className="flex items-center justify-between pb-3.5 sm:pb-4 mb-4 border-b border-slate-800 gap-2">
+                <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-rose-500/80 shrink-0" />
+                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-amber-500/80 shrink-0" />
+                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-500/80 shrink-0" />
+                  <span className="ml-1 sm:ml-2 text-[11px] sm:text-xs font-mono text-slate-400 bg-slate-900 px-2 py-0.5 rounded border border-slate-800 truncate max-w-[130px] sm:max-w-none">
+                    mintendo.agency/live-audit
                   </span>
                 </div>
-                <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-800/50">
+                <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-semibold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-800/50 shrink-0">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
                   ONLINE PROD
                 </span>
@@ -235,7 +256,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 </button>
 
               </div>
-            </div>
+            </motion.div>
 
             {/* Decorative background glow behind the card */}
             <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-2xl blur-xl -z-10 opacity-70" />
@@ -246,3 +267,4 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     </section>
   );
 };
+

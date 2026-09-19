@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ScrollReveal } from './ScrollReveal';
 import {
   Send,
   PhoneCall,
@@ -37,31 +38,35 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
   };
 
   return (
-    <footer id="contact" className="bg-[#070A12] relative border-t border-slate-800/80 pt-20 pb-12">
+    <footer id="contact" className="bg-[#070A12] relative border-t border-slate-800/80 pt-16 pb-28 md:pt-20 md:pb-16">
       {/* Background radial glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-emerald-500/10 blur-[130px] pointer-events-none rounded-full" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         
         {/* Conversion Block Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-700/50 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-4">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Старт вашого проєкту</span>
+        <ScrollReveal direction="up" delay={0.05}>
+          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-700/50 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-4">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Старт вашого проєкту</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white tracking-tight mb-4 font-['Plus_Jakarta_Sans']">
+              Готові отримати сайт, який окупається з першого місяця?
+            </h2>
+            <p className="text-slate-300 text-base sm:text-lg">
+              Залиште заявку на розрахунок або напишіть у зручний месенджер. Ми підготуємо аудит вашої ніші та персональну комерційну пропозицію за 24 години.
+            </p>
           </div>
-          <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white tracking-tight mb-4 font-['Plus_Jakarta_Sans']">
-            Готові отримати сайт, який окупається з першого місяця?
-          </h2>
-          <p className="text-slate-300 text-base sm:text-lg">
-            Залиште заявку на розрахунок або напишіть у зручний месенджер. Ми підготуємо аудит вашої ніші та персональну комерційну пропозицію за 24 години.
-          </p>
-        </div>
+        </ScrollReveal>
 
         {/* Form and Direct Messengers Container */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch mb-16 sm:mb-20">
           
           {/* Left: Lead Generation Form */}
-          <div className="lg:col-span-7 bg-slate-900/90 border border-slate-800 rounded-3xl p-7 sm:p-9 shadow-2xl relative">
+          <div className="lg:col-span-7">
+            <ScrollReveal direction="up" delay={0.06}>
+              <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-5 sm:p-9 shadow-2xl relative">
             {isSubmitted ? (
               <div className="py-12 text-center space-y-4 animate-in fade-in duration-300">
                 <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto mb-2 border border-emerald-500/30">
@@ -83,7 +88,7 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
                 </div>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
                 <div className="flex items-center justify-between pb-3 border-b border-slate-800">
                   <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
                     Заявка на розрахунок проєкту / аудит
@@ -105,7 +110,7 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
                       placeholder="Олексій"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-slate-800/80 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-emerald-500 transition-colors"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-800/80 border border-slate-700 text-white placeholder-slate-500 text-base sm:text-sm focus:outline-none focus:border-emerald-500 transition-colors"
                     />
                   </div>
 
@@ -119,7 +124,7 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
                       placeholder="+38 (0__) ___-__-__ або @username"
                       value={formData.contact}
                       onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-slate-800/80 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-emerald-500 transition-colors"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-800/80 border border-slate-700 text-white placeholder-slate-500 text-base sm:text-sm focus:outline-none focus:border-emerald-500 transition-colors"
                     />
                   </div>
                 </div>
@@ -132,7 +137,7 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
                     <select
                       value={formData.projectType}
                       onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-slate-800/80 border border-slate-700 text-white text-sm focus:outline-none focus:border-emerald-500 transition-colors"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-800/80 border border-slate-700 text-white text-base sm:text-sm focus:outline-none focus:border-emerald-500 transition-colors"
                     >
                       <option value="Landing Page">Landing Page (Лендінг)</option>
                       <option value="Корпоративний сайт">Корпоративний сайт</option>
@@ -198,10 +203,14 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
                 </div>
               </form>
             )}
+              </div>
+            </ScrollReveal>
           </div>
 
           {/* Right: Direct Messengers & Mintendo Guarantees */}
-          <div className="lg:col-span-5 flex flex-col justify-between space-y-6">
+          <div className="lg:col-span-5">
+            <ScrollReveal direction="up" delay={0.08}>
+              <div className="flex flex-col justify-between space-y-6">
             
             {/* Quick Messenger Cards */}
             <div className="p-7 rounded-3xl bg-slate-900/80 border border-slate-800 space-y-5">
@@ -278,6 +287,8 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
               </p>
             </div>
 
+              </div>
+            </ScrollReveal>
           </div>
 
         </div>
@@ -288,8 +299,8 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
             <span className="font-bold text-slate-300 font-['Plus_Jakarta_Sans']">Mintendo Web Studio</span>
             <span>© {new Date().getFullYear()}. Усі права захищено.</span>
           </div>
-          <div className="flex items-center gap-6 text-slate-400">
-            <span>Договір публічної оферти</span>
+          <div className="flex flex-wrap items-center justify-center sm:justify-end gap-4 sm:gap-6 text-slate-400">
+            <span>Публічна оферта</span>
             <span>Політика конфіденційності</span>
             <span className="text-emerald-500 font-mono">100% передача прав замовнику</span>
           </div>

@@ -15,6 +15,9 @@ import { FaqSection } from './components/FaqSection';
 import { FooterCtaSection } from './components/FooterCtaSection';
 import { StickyMobileBar } from './components/StickyMobileBar';
 import { ConsultationModal } from './components/ConsultationModal';
+import { BackgroundVisuals } from './components/BackgroundVisuals';
+import { ScrollReveal } from './components/ScrollReveal';
+import { MobileVisualShowcase } from './components/MobileVisualShowcase';
 
 export default function App() {
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
@@ -54,19 +57,29 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-slate-100 selection:bg-emerald-500/30 selection:text-emerald-200">
+    <div className="min-h-screen bg-[#070A12] text-slate-100 selection:bg-emerald-500/30 selection:text-emerald-200 relative overflow-x-hidden">
+      {/* Dynamic Animated Ambient Background with Glowing Orbs & Tech Grid */}
+      <BackgroundVisuals />
+
       {/* Fixed Navigation Bar */}
       <Navbar
         onOpenConsultation={() => handleOpenConsultation()}
         onScrollToCalculator={scrollToCalculator}
       />
 
-      <main>
+      <main className="relative z-10">
         {/* Hero Section */}
         <HeroSection
           onScrollToCalculator={scrollToCalculator}
           onOpenConsultation={() => handleOpenConsultation()}
         />
+
+        {/* Mobile Visual Showcase (Rich visuals and interactive phone mockup) */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 sm:py-4">
+          <ScrollReveal direction="up" delay={0.05}>
+            <MobileVisualShowcase />
+          </ScrollReveal>
+        </section>
 
         {/* Pain Points Section */}
         <PainPointsSection />

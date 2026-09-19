@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CASES_DATA } from '../data/content';
 import { CaseStudy } from '../types';
+import { ScrollReveal } from './ScrollReveal';
 import {
   TrendingUp,
   Award,
@@ -40,43 +41,45 @@ export const CasesSection: React.FC<CasesSectionProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/60 border border-blue-700/50 text-blue-400 text-xs font-semibold uppercase tracking-wider mb-4">
-            <Award className="w-3.5 h-3.5" />
-            <span>Соціальний доказ & Кейси</span>
-          </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-4 font-['Plus_Jakarta_Sans']">
-            Результати, підтверджені цифрами та конверсією
-          </h2>
-          <p className="text-slate-300 text-base sm:text-lg">
-            Кожен проєкт Mintendo — це інвестиція з прогнозованою окупністю. Погляньте, як наші рішення трансформували бізнес наших клієнтів.
-          </p>
+        <ScrollReveal direction="up" delay={0.05}>
+          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/60 border border-blue-700/50 text-blue-400 text-xs font-semibold uppercase tracking-wider mb-4">
+              <Award className="w-3.5 h-3.5" />
+              <span>Соціальний доказ & Кейси</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-4 font-['Plus_Jakarta_Sans']">
+              Результати, підтверджені цифрами та конверсією
+            </h2>
+            <p className="text-slate-300 text-base sm:text-lg">
+              Кожен проєкт Mintendo — це інвестиція з прогнозованою окупністю. Погляньте, як наші рішення трансформували бізнес наших клієнтів.
+            </p>
 
-          {/* Category Filter Pills */}
-          <div className="flex flex-wrap items-center justify-center gap-2 mt-8">
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setSelectedCategory(cat.id)}
-                className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl transition-all cursor-pointer ${
-                  selectedCategory === cat.id
-                    ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/25'
-                    : 'bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 border border-slate-800'
-                }`}
-              >
-                {cat.label}
-              </button>
-            ))}
+            {/* Category Filter Pills */}
+            <div className="flex flex-wrap items-center justify-center gap-2 mt-6 sm:mt-8">
+              {categories.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => setSelectedCategory(cat.id)}
+                  className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl transition-all cursor-pointer ${
+                    selectedCategory === cat.id
+                      ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/25'
+                      : 'bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 border border-slate-800'
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Cases Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {filteredCases.map((item) => (
-            <div
-              key={item.id}
-              className="rounded-2xl border border-slate-800 bg-slate-900/80 overflow-hidden shadow-xl hover:border-slate-700 transition-all flex flex-col group"
-            >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+          {filteredCases.map((item, idx) => (
+            <ScrollReveal key={item.id} direction="up" delay={idx * 0.05}>
+              <div
+                className="rounded-2xl border border-slate-800 bg-slate-900/80 overflow-hidden shadow-xl hover:border-slate-700 transition-all flex flex-col group h-full"
+              >
               {/* Image Preview Container with Overlaid Highlight Metric */}
               <div className="relative h-60 sm:h-72 overflow-hidden">
                 <img
@@ -172,8 +175,8 @@ export const CasesSection: React.FC<CasesSectionProps> = ({
                   </button>
                 </div>
               </div>
-
-            </div>
+              </div>
+            </ScrollReveal>
           ))}
         </div>
 
@@ -181,20 +184,20 @@ export const CasesSection: React.FC<CasesSectionProps> = ({
 
       {/* Case Details Modal */}
       {activeCaseModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="relative w-full max-w-2xl bg-slate-900 border border-slate-700 rounded-2xl p-6 sm:p-8 shadow-2xl overflow-y-auto max-h-[90vh]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="relative w-full max-w-2xl bg-slate-900 border border-slate-700 rounded-2xl p-4 sm:p-8 shadow-2xl overflow-y-auto max-h-[90vh]">
             <div className="flex items-start justify-between mb-4">
               <div>
                 <span className="text-xs uppercase font-bold text-emerald-400 tracking-wider">
                   {activeCaseModal.categoryLabel}
                 </span>
-                <h3 className="text-xl sm:text-2xl font-bold text-white mt-1">
+                <h3 className="text-lg sm:text-2xl font-bold text-white mt-1">
                   {activeCaseModal.title}
                 </h3>
               </div>
               <button
                 onClick={() => setActiveCaseModal(null)}
-                className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors"
+                className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors"
               >
                 ✕
               </button>
@@ -204,13 +207,13 @@ export const CasesSection: React.FC<CasesSectionProps> = ({
               {activeCaseModal.summary}
             </p>
 
-            <div className="grid grid-cols-3 gap-3 mb-6 p-4 rounded-xl bg-slate-800/80 border border-slate-700 text-center">
+            <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-6 p-3 sm:p-4 rounded-xl bg-slate-800/80 border border-slate-700 text-center">
               {activeCaseModal.metrics.map((m, i) => (
                 <div key={i}>
-                  <div className="text-lg sm:text-xl font-bold text-emerald-400 font-mono">
+                  <div className="text-base sm:text-xl font-bold text-emerald-400 font-mono">
                     {m.value}
                   </div>
-                  <div className="text-xs text-slate-400 mt-1">{m.label}</div>
+                  <div className="text-[11px] sm:text-xs text-slate-400 mt-1">{m.label}</div>
                 </div>
               ))}
             </div>
@@ -237,7 +240,7 @@ export const CasesSection: React.FC<CasesSectionProps> = ({
               </ul>
             </div>
 
-            <div className="flex gap-3 pt-4 border-t border-slate-800">
+            <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-800">
               <button
                 onClick={() => {
                   const title = activeCaseModal.title;

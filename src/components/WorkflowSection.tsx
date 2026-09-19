@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { WORKFLOW_STEPS_DATA } from '../data/content';
+import { ScrollReveal } from './ScrollReveal';
 import {
   GitBranch,
   CheckCircle2,
@@ -22,62 +23,69 @@ export const WorkflowSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-700/50 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-4">
-            <GitBranch className="w-3.5 h-3.5" />
-            <span>Прозорий процес розробки</span>
+        <ScrollReveal direction="up" delay={0.05}>
+          <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-700/50 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-4">
+              <GitBranch className="w-3.5 h-3.5" />
+              <span>Прозорий процес розробки</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-4 font-['Plus_Jakarta_Sans']">
+              5 кроків від першої розмови до перших продажів
+            </h2>
+            <p className="text-slate-300 text-base sm:text-lg">
+              Жодних сюрпризів чи зникнень. Кожен етап розбитий на чіткі спринти з онлайн-контролем у вашому персональному трекері.
+            </p>
           </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-4 font-['Plus_Jakarta_Sans']">
-            5 кроків від першої розмови до перших продажів
-          </h2>
-          <p className="text-slate-300 text-base sm:text-lg">
-            Жодних сюрпризів чи зникнень. Кожен етап розбитий на чіткі спринти з онлайн-контролем у вашому персональному трекері.
-          </p>
-        </div>
+        </ScrollReveal>
 
         {/* Interactive Step Navigation Bar */}
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 mb-10">
-          {WORKFLOW_STEPS_DATA.map((step, idx) => {
-            const isActive = activeStepIndex === idx;
-            return (
-              <button
-                key={step.stepNumber}
-                type="button"
-                onClick={() => setActiveStepIndex(idx)}
-                className={`p-3.5 rounded-xl text-left border transition-all cursor-pointer flex flex-col justify-between ${
-                  isActive
-                    ? 'border-emerald-500 bg-emerald-950/40 shadow-lg shadow-emerald-950/50'
-                    : 'border-slate-800 bg-slate-900/60 hover:bg-slate-800/60 text-slate-400'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <span
-                    className={`w-6 h-6 rounded-full text-xs font-bold font-mono flex items-center justify-center ${
-                      isActive
-                        ? 'bg-emerald-500 text-white'
-                        : 'bg-slate-800 text-slate-400'
-                    }`}
-                  >
-                    0{step.stepNumber}
-                  </span>
-                  <span className="text-[10px] font-mono text-slate-400">
-                    {step.duration}
-                  </span>
-                </div>
-                <div
-                  className={`text-xs font-bold line-clamp-1 ${
-                    isActive ? 'text-white' : 'text-slate-300'
+        <ScrollReveal direction="up" delay={0.06}>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 mb-8 sm:mb-10">
+            {WORKFLOW_STEPS_DATA.map((step, idx) => {
+              const isActive = activeStepIndex === idx;
+              return (
+                <button
+                  key={step.stepNumber}
+                  type="button"
+                  onClick={() => setActiveStepIndex(idx)}
+                  className={`p-3 sm:p-3.5 rounded-xl text-left border transition-all cursor-pointer flex flex-col justify-between ${
+                    idx === 4 ? 'col-span-2 sm:col-span-1' : ''
+                  } ${
+                    isActive
+                      ? 'border-emerald-500 bg-emerald-950/40 shadow-lg shadow-emerald-950/50'
+                      : 'border-slate-800 bg-slate-900/60 hover:bg-slate-800/60 text-slate-400'
                   }`}
                 >
-                  {step.title}
-                </div>
-              </button>
-            );
-          })}
-        </div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span
+                      className={`w-6 h-6 rounded-full text-xs font-bold font-mono flex items-center justify-center ${
+                        isActive
+                          ? 'bg-emerald-500 text-white'
+                          : 'bg-slate-800 text-slate-400'
+                      }`}
+                    >
+                      0{step.stepNumber}
+                    </span>
+                    <span className="text-[10px] font-mono text-slate-400">
+                      {step.duration}
+                    </span>
+                  </div>
+                  <div
+                    className={`text-xs font-bold line-clamp-1 ${
+                      isActive ? 'text-white' : 'text-slate-300'
+                    }`}
+                  >
+                    {step.title}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </ScrollReveal>
 
         {/* Active Step Deep-Dive Card */}
-        <div className="rounded-2xl border border-slate-800 bg-slate-900/90 p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+        <ScrollReveal direction="up" delay={0.08}>
+          <div className="rounded-2xl border border-slate-800 bg-slate-900/90 p-5 sm:p-8 shadow-2xl relative overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             {/* Left Column: Step Description & Deliverables */}
@@ -191,6 +199,7 @@ export const WorkflowSection: React.FC = () => {
 
           </div>
         </div>
+        </ScrollReveal>
 
       </div>
     </section>

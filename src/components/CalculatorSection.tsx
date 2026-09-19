@@ -24,6 +24,7 @@ import {
   Flame,
   FileSpreadsheet,
 } from 'lucide-react';
+import { ScrollReveal } from './ScrollReveal';
 
 interface CalculatorSectionProps {
   onSelectCalculation: (summary: {
@@ -126,34 +127,38 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-700/50 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-4">
-            <Calculator className="w-3.5 h-3.5" />
-            <span>Інтерактивний кошторис онлайн</span>
+        <ScrollReveal direction="up" delay={0.05}>
+          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-700/50 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-4">
+              <Calculator className="w-3.5 h-3.5" />
+              <span>Інтерактивний кошторис онлайн</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-4 font-['Plus_Jakarta_Sans']">
+              Розрахуйте вартість та точні терміни вашого сайту
+            </h2>
+            <p className="text-slate-300 text-base sm:text-lg">
+              Прозорий конфігуратор без прихованих зірочок. Оберіть параметри та дізнайтеся реальний бюджет розробки під ключ.
+            </p>
           </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-4 font-['Plus_Jakarta_Sans']">
-            Розрахуйте вартість та точні терміни вашого сайту
-          </h2>
-          <p className="text-slate-300 text-base sm:text-lg">
-            Прозорий конфігуратор без прихованих зірочок. Оберіть параметри та дізнайтеся реальний бюджет розробки під ключ.
-          </p>
-        </div>
+        </ScrollReveal>
 
         {/* Calculator Main Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Left Column: Form Controls (Steps 1 to 4) */}
-          <div className="lg:col-span-8 space-y-8">
+          <div className="lg:col-span-8">
+            <ScrollReveal direction="up" delay={0.06}>
+              <div className="space-y-8">
             
             {/* Step 1: Project Type */}
-            <div className="p-6 sm:p-7 rounded-2xl bg-slate-900/80 border border-slate-800">
+            <div className="p-4 sm:p-7 rounded-2xl bg-slate-900/80 border border-slate-800">
               <div className="flex items-center justify-between mb-4">
                 <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400">
                   Крок 1 із 4
                 </span>
                 <span className="text-xs text-slate-400">Оберіть категорію сайту</span>
               </div>
-              <h3 className="text-lg font-bold text-white mb-4">
+              <h3 className="text-base sm:text-lg font-bold text-white mb-4">
                 Який тип сайту потрібен вашому бізнесу?
               </h3>
 
@@ -194,14 +199,14 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({
             </div>
 
             {/* Step 2: Design Tier */}
-            <div className="p-6 sm:p-7 rounded-2xl bg-slate-900/80 border border-slate-800">
+            <div className="p-4 sm:p-7 rounded-2xl bg-slate-900/80 border border-slate-800">
               <div className="flex items-center justify-between mb-4">
                 <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400">
                   Крок 2 із 4
                 </span>
                 <span className="text-xs text-slate-400">Рівень візуалу та анімацій</span>
               </div>
-              <h3 className="text-lg font-bold text-white mb-4">
+              <h3 className="text-base sm:text-lg font-bold text-white mb-4">
                 Який рівень дизайну та візуалу вам необхідний?
               </h3>
 
@@ -243,14 +248,14 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({
             </div>
 
             {/* Step 3: Extra Modules (Multi-select) */}
-            <div className="p-6 sm:p-7 rounded-2xl bg-slate-900/80 border border-slate-800">
+            <div className="p-4 sm:p-7 rounded-2xl bg-slate-900/80 border border-slate-800">
               <div className="flex items-center justify-between mb-4">
                 <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400">
                   Крок 3 із 4
                 </span>
                 <span className="text-xs text-slate-400">Додаткові модулі та сервіси</span>
               </div>
-              <h3 className="text-lg font-bold text-white mb-2">
+              <h3 className="text-base sm:text-lg font-bold text-white mb-2">
                 Які інтеграції та функції потрібно підключити?
               </h3>
               <p className="text-xs text-slate-400 mb-5">
@@ -303,14 +308,14 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({
             </div>
 
             {/* Step 4: Urgency Setting */}
-            <div className="p-6 sm:p-7 rounded-2xl bg-slate-900/80 border border-slate-800">
+            <div className="p-4 sm:p-7 rounded-2xl bg-slate-900/80 border border-slate-800">
               <div className="flex items-center justify-between mb-4">
                 <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400">
                   Крок 4 із 4
                 </span>
                 <span className="text-xs text-slate-400">Пріоритет термінів</span>
               </div>
-              <h3 className="text-lg font-bold text-white mb-4">
+              <h3 className="text-base sm:text-lg font-bold text-white mb-4">
                 Наскільки терміново потрібен реліз сайту?
               </h3>
 
@@ -355,11 +360,14 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({
               </div>
             </div>
 
+              </div>
+            </ScrollReveal>
           </div>
 
           {/* Right Column: Sticky Summary & Quote Action Card */}
-          <div className="lg:col-span-4 sticky top-24">
-            <div className="rounded-2xl border border-emerald-500/40 bg-gradient-to-b from-slate-900 to-slate-950 p-6 sm:p-7 shadow-2xl shadow-emerald-950/30 backdrop-blur-md">
+          <div className="lg:col-span-4 lg:sticky lg:top-24">
+            <ScrollReveal direction="up" delay={0.08}>
+              <div className="rounded-2xl border border-emerald-500/40 bg-gradient-to-b from-slate-900 to-slate-950 p-5 sm:p-7 shadow-2xl shadow-emerald-950/30 backdrop-blur-md">
               
               <div className="flex items-center justify-between pb-4 mb-5 border-b border-slate-800">
                 <span className="text-xs uppercase font-bold tracking-wider text-emerald-400 flex items-center gap-1.5">
@@ -382,8 +390,8 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({
                     (~{calculation.priceUAH.toLocaleString()} ₴)
                   </span>
                 </div>
-                <div className="text-[11px] text-slate-500 mt-1">
-                  *Остаточний кошторис фіксується в договорі після брифінгу
+                <div className="text-[11px] text-slate-400 mt-1">
+                  *Остаточний кошторис фіксується перед стартом після узгодження ТЗ
                 </div>
               </div>
 
@@ -449,13 +457,14 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({
               </div>
 
               <div className="mt-4 text-center">
-                <span className="text-[11px] text-slate-500 flex items-center justify-center gap-1">
-                  <ShieldAlert className="w-3 h-3 text-slate-500" />
-                  Гарантія незмінності ціни за договором Mintendo
+                <span className="text-[11px] text-slate-400 flex items-center justify-center gap-1">
+                  <ShieldAlert className="w-3 h-3 text-emerald-400" />
+                  Гарантія незмінності ціни (Fixed Price) від Mintendo
                 </span>
               </div>
 
             </div>
+            </ScrollReveal>
           </div>
 
         </div>
