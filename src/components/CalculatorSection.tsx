@@ -9,6 +9,7 @@ import {
   PROJECT_TYPES_CONFIG,
   DESIGN_TIERS_CONFIG,
   EXTRA_MODULES_LIST,
+  RECOMMENDED_MODULES_BY_TYPE,
 } from '../data/content';
 import {
   Calculator,
@@ -40,11 +41,19 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({
   onSelectCalculation,
 }) => {
   const [calcState, setCalcState] = useState<CalculatorState>({
-    projectType: 'corporate',
+    projectType: 'landing',
     designTier: 'custom_ui',
-    selectedModules: ['payment', 'crm', 'telegram_bot'],
+    selectedModules: [...RECOMMENDED_MODULES_BY_TYPE['landing']],
     urgency: 'standard',
   });
+
+  const handleSelectProjectType = (pKey: ProjectType) => {
+    setCalcState((prev) => ({
+      ...prev,
+      projectType: pKey,
+      selectedModules: [...RECOMMENDED_MODULES_BY_TYPE[pKey]],
+    }));
+  };
 
   const toggleModule = (id: ExtraModuleId) => {
     setCalcState((prev) => {
@@ -58,45 +67,79 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({
     });
   };
 
+  // Base development price (project type + design tier + fixed modules)
+  const currentDevPrice = useMemo(() => {
+    const pTypeConfig = PROJECT_TYPES_CONFIG[calcState.projectType];
+    const designConfig = DESIGN_TIERS_CONFIG[calcState.designTier];
+    let dev = pTypeConfig.basePrice * designConfig.priceMultiplier;
+    calcState.selectedModules.forEach((modId) => {
+      const mod = EXTRA_MODULES_LIST.find((m) => m.id === modId);
+      if (mod && !mod.percentage) {
+        dev += mod.price;
+      }
+    });
+    return Math.round(dev);
+  }, [calcState.projectType, calcState.designTier, calcState.selectedModules]);
+
   // Calculation Logic
   const calculation = useMemo(() => {
     const pTypeConfig = PROJECT_TYPES_CONFIG[calcState.projectType];
     const designConfig = DESIGN_TIERS_CONFIG[calcState.designTier];
 
     // Base price multiplied by design tier
-    let price = pTypeConfig.basePrice * designConfig.priceMultiplier;
+    let devPrice = pTypeConfig.basePrice * designConfig.priceMultiplier;
     let days = pTypeConfig.baseDays + designConfig.daysDelta;
 
-    // Add extra modules
+    // Add extra modules with fixed prices
     calcState.selectedModules.forEach((modId) => {
       const mod = EXTRA_MODULES_LIST.find((m) => m.id === modId);
-      if (mod) {
-        price += mod.price;
+      if (mod && !mod.percentage) {
+        devPrice += mod.price;
         days += mod.days;
       }
     });
 
+    // Add percentage-based modules (e.g. 30-day support: 15% of development cost)
+    let percentModulesPrice = 0;
+    calcState.selectedModules.forEach((modId) => {
+      const mod = EXTRA_MODULES_LIST.find((m) => m.id === modId);
+      if (mod && mod.percentage) {
+        percentModulesPrice += Math.round(devPrice * (mod.percentage / 100));
+        days += mod.days;
+      }
+    });
+
+    let totalPrice = devPrice + percentModulesPrice;
+
     // Urgency adjustment
     if (calcState.urgency === 'fast') {
-      price = Math.round(price * 1.25);
+      totalPrice = Math.round(totalPrice * 1.25);
       days = Math.max(7, Math.round(days * 0.65)); // 35% faster
     }
 
-    const priceUSD = Math.round(price);
+    const priceUSD = Math.round(totalPrice);
     const priceUAH = Math.round(priceUSD * 41.5);
 
     return {
       priceUSD,
       priceUAH,
+      devPrice: Math.round(devPrice),
+      percentModulesPrice: Math.round(percentModulesPrice),
       days,
     };
   }, [calcState]);
 
   const handleFixEstimate = () => {
     const pType = PROJECT_TYPES_CONFIG[calcState.projectType].name;
-    const modules = calcState.selectedModules.map(
-      (mId) => EXTRA_MODULES_LIST.find((m) => m.id === mId)?.name || mId
-    );
+    const modules = calcState.selectedModules.map((mId) => {
+      const mod = EXTRA_MODULES_LIST.find((m) => m.id === mId);
+      if (!mod) return mId;
+      if (mod.percentage) {
+        const dynamicCost = Math.round(currentDevPrice * (mod.percentage / 100));
+        return `${mod.name} (+${mod.percentage}%, ~$${dynamicCost})`;
+      }
+      return `${mod.name} (+$${mod.price})`;
+    });
 
     onSelectCalculation({
       projectType: pType,
@@ -170,7 +213,7 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({
                     <button
                       key={pKey}
                       type="button"
-                      onClick={() => setCalcState((prev) => ({ ...prev, projectType: pKey }))}
+                      onClick={() => handleSelectProjectType(pKey)}
                       className={`p-4 rounded-xl text-left border transition-all cursor-pointer flex flex-col justify-between ${
                         isSelected
                           ? 'border-emerald-500 bg-emerald-950/30 shadow-md shadow-emerald-950/50'
@@ -249,22 +292,38 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({
 
             {/* Step 3: Extra Modules (Multi-select) */}
             <div className="p-4 sm:p-7 rounded-2xl bg-slate-900/80 border border-slate-800">
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
                 <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400">
                   Крок 3 із 4
                 </span>
-                <span className="text-xs text-slate-400">Додаткові модулі та сервіси</span>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setCalcState((prev) => ({
+                      ...prev,
+                      selectedModules: [...RECOMMENDED_MODULES_BY_TYPE[prev.projectType]],
+                    }))
+                  }
+                  className="text-xs text-emerald-400 hover:text-emerald-300 underline underline-offset-2 transition-colors cursor-pointer"
+                >
+                  Автопідбір для «{PROJECT_TYPES_CONFIG[calcState.projectType].name}»
+                </button>
               </div>
               <h3 className="text-base sm:text-lg font-bold text-white mb-2">
                 Які інтеграції та функції потрібно підключити?
               </h3>
               <p className="text-xs text-slate-400 mb-5">
-                Можна обрати декілька. Базове SEO, мобільний адаптив та хостинг-налаштування вже включені безкоштовно.
+                Модулі автоматично адаптовані під обраний тип сайту. Ви можете додати або зняти будь-які опції за потреби.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {EXTRA_MODULES_LIST.map((mod) => {
                   const isChecked = calcState.selectedModules.includes(mod.id);
+                  const isRecommended = RECOMMENDED_MODULES_BY_TYPE[calcState.projectType]?.includes(mod.id);
+                  const dynamicPrice = mod.percentage
+                    ? Math.round(currentDevPrice * (mod.percentage / 100))
+                    : mod.price;
+
                   return (
                     <div
                       key={mod.id}
@@ -286,20 +345,42 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({
                           {isChecked && <Check className="w-3 h-3" />}
                         </div>
                         <div>
-                          <div className="text-xs font-bold text-white mb-1">
-                            {mod.name}
+                          <div className="flex items-center gap-1.5 flex-wrap mb-1">
+                            <span className="text-xs font-bold text-white">
+                              {mod.name}
+                            </span>
+                            {isRecommended && (
+                              <span className="text-[10px] font-semibold text-emerald-300 bg-emerald-950/80 border border-emerald-700/60 px-1.5 py-0.2 rounded-full">
+                                Рекомендовано
+                              </span>
+                            )}
                           </div>
                           <div className="text-[11px] text-slate-400 leading-snug">
-                            {mod.description}
+                            {mod.percentage
+                              ? `${mod.percentage}% від вартості розробки ($${dynamicPrice}). ${mod.description}`
+                              : mod.description}
                           </div>
                         </div>
                       </div>
 
                       <div className="text-right shrink-0">
-                        <span className="text-xs font-mono font-bold text-emerald-400">
-                          +${mod.price}
-                        </span>
-                        <div className="text-[10px] text-slate-500">+{mod.days} дні</div>
+                        {mod.percentage ? (
+                          <>
+                            <span className="text-xs font-mono font-bold text-emerald-400 block">
+                              +{mod.percentage}%
+                            </span>
+                            <span className="text-[10px] font-mono text-emerald-300/80 block">
+                              (+${dynamicPrice})
+                            </span>
+                          </>
+                        ) : (
+                          <span className="text-xs font-mono font-bold text-emerald-400">
+                            +${mod.price}
+                          </span>
+                        )}
+                        <div className="text-[10px] text-slate-500">
+                          {mod.days > 0 ? `+${mod.days} дні` : 'на 30 днів'}
+                        </div>
                       </div>
                     </div>
                   );
@@ -390,7 +471,13 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({
                     (~{calculation.priceUAH.toLocaleString()} ₴)
                   </span>
                 </div>
-                <div className="text-[11px] text-slate-400 mt-1">
+                {calcState.selectedModules.includes('support_30d') && (
+                  <div className="text-[11px] text-emerald-400/90 mt-2 flex items-center gap-1.5 bg-emerald-950/40 border border-emerald-800/40 rounded-lg px-2.5 py-1">
+                    <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                    <span>Включає 30 днів підтримки: +${calculation.percentModulesPrice} (15% від проєкту)</span>
+                  </div>
+                )}
+                <div className="text-[11px] text-slate-400 mt-1.5">
                   *Остаточний кошторис фіксується перед стартом після узгодження ТЗ
                 </div>
               </div>
@@ -410,7 +497,7 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({
               <div className="p-4 rounded-xl bg-emerald-950/40 border border-emerald-800/40 mb-6">
                 <div className="text-xs font-bold text-emerald-300 flex items-center gap-1.5 mb-2.5">
                   <Gift className="w-4 h-4 text-emerald-400" />
-                  <span>Вже включено безкоштовно ($450 цінності):</span>
+                  <span>Вже включено безкоштовно ($350 цінності):</span>
                 </div>
                 <ul className="space-y-1.5 text-xs text-slate-300">
                   <li className="flex items-center gap-1.5">
@@ -423,11 +510,7 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({
                   </li>
                   <li className="flex items-center gap-1.5">
                     <Check className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>30 днів безкоштовної техпідтримки</span>
-                  </li>
-                  <li className="flex items-center gap-1.5">
-                    <Check className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>Відеоінструкція по роботі з адмінкою</span>
+                    <span>7 днів безкоштовної техпідтримки</span>
                   </li>
                 </ul>
               </div>

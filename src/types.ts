@@ -3,18 +3,25 @@ export type ProjectType = 'landing' | 'corporate' | 'ecommerce' | 'service' | 'l
 export type DesignTier = 'custom_ui' | 'premium_3d' | 'redesign';
 
 export type ExtraModuleId = 
+  | 'mobile_adaptive'
+  | 'telegram_bot'
   | 'payment'
   | 'crm'
   | 'multilang'
   | 'seo_copy'
-  | 'client_portal'
-  | 'telegram_bot';
+  | 'quiz_cro'
+  | 'analytics_tracking'
+  | 'speed_optimization'
+  | 'branding'
+  | 'support_30d'
+  | 'client_portal';
 
 export interface ExtraModule {
   id: ExtraModuleId;
   name: string;
   description: string;
   price: number;
+  percentage?: number;
   days: number;
   category: string;
 }
