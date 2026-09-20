@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070A10"/>
+      <stop offset="50%" stop-color="#0B0F19"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981"/>
+      <stop offset="50%" stop-color="#14B8A6"/>
+      <stop offset="100%" stop-color="#3B82F6"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="20%" cy="20%" r="60%">
+      <stop offset="0%" stop-color="#10B981" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#10B981" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="80%" cy="80%" r="50%">
+      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#3B82F6" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+  <rect width="1200" height="630" fill="url(#glow1)"/>
+  <rect width="1200" height="630" fill="url(#glow2)"/>
+
+  <!-- Subtle Grid Pattern -->
+  <g stroke="#334155" stroke-opacity="0.15" stroke-width="1">
+    <line x1="0" y1="105" x2="1200" y2="105"/>
+    <line x1="0" y1="210" x2="1200" y2="210"/>
+    <line x1="0" y1="315" x2="1200" y2="315"/>
+    <line x1="0" y1="420" x2="1200" y2="420"/>
+    <line x1="0" y1="525" x2="1200" y2="525"/>
+    <line x1="200" y1="0" x2="200" y2="630"/>
+    <line x1="400" y1="0" x2="400" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="800" y1="0" x2="800" y2="630"/>
+    <line x1="1000" y1="0" x2="1000" y2="630"/>
+  </g>
+
+  <!-- Outer Border -->
+  <rect x="24" y="24" width="1152" height="582" rx="28" fill="none" stroke="#334155" stroke-opacity="0.5" stroke-width="2"/>
+
+  <!-- Logo Pill -->
+  <g transform="translate(90, 85)">
+    <rect width="70" height="70" rx="18" fill="#0F172A" stroke="url(#accentGrad)" stroke-width="2"/>
+    <text x="20" y="49" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="800" font-size="38" fill="#FFFFFF">M</text>
+    <circle cx="54" cy="45" r="5" fill="#10B981"/>
+    
+    <text x="90" y="38" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="800" font-size="36" fill="#FFFFFF">Mintendo</text>
+    <text x="92" y="60" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="600" font-size="14" letter-spacing="2" fill="#94A3B8">WEB &amp; CRO STUDIO</text>
+  </g>
+
+  <!-- Category Badge -->
+  <g transform="translate(850, 95)">
+    <rect width="260" height="46" rx="23" fill="#0F172A" stroke="#10B981" stroke-opacity="0.4" stroke-width="1.5"/>
+    <circle cx="28" cy="23" r="5" fill="#10B981"/>
+    <text x="44" y="29" font-family="system-ui, sans-serif" font-weight="600" font-size="15" fill="#34D399">ГАРАНТІЯ РЕЗУЛЬТАТУ</text>
+  </g>
+
+  <!-- Main Headline -->
+  <text x="90" y="260" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="800" font-size="52" fill="#FFFFFF">
+    Сайти для бізнесу від Mintendo,
+  </text>
+  <text x="90" y="325" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="800" font-size="52" fill="url(#accentGrad)">
+    які приносять реальних клієнтів
+  </text>
+
+  <!-- Description -->
+  <text x="90" y="390" font-family="system-ui, sans-serif" font-weight="400" font-size="22" fill="#CBD5E1">
+    Розробка під ключ із фокусом на UX, SEO та високу конверсію (CRO).
+  </text>
+  <text x="90" y="425" font-family="system-ui, sans-serif" font-weight="400" font-size="22" fill="#94A3B8">
+    Фіксовані терміни, швидкість завантаження 90+ та онлайн-калькулятор вартості.
+  </text>
+
+  <!-- Feature Badges Bottom Row -->
+  <g transform="translate(90, 480)">
+    <!-- Badge 1 -->
+    <rect x="0" y="0" width="230" height="56" rx="14" fill="#0F172A" stroke="#334155" stroke-width="1"/>
+    <text x="24" y="34" font-family="system-ui, sans-serif" font-weight="600" font-size="16" fill="#10B981">⚡ Швидкість 90+ PageSpeed</text>
+
+    <!-- Badge 2 -->
+    <rect x="250" y="0" width="240" height="56" rx="14" fill="#0F172A" stroke="#334155" stroke-width="1"/>
+    <text x="274" y="34" font-family="system-ui, sans-serif" font-weight="600" font-size="16" fill="#38BDF8">🎯 Вбудоване SEO з 1 дня</text>
+
+    <!-- Badge 3 -->
+    <rect x="510" y="0" width="220" height="56" rx="14" fill="#0F172A" stroke="#334155" stroke-width="1"/>
+    <text x="534" y="34" font-family="system-ui, sans-serif" font-weight="600" font-size="16" fill="#FBBF24">🔒 Фіксована ціна за ТЗ</text>
+
+    <!-- Badge 4 -->
+    <rect x="750" y="0" width="260" height="56" rx="14" fill="#0F172A" stroke="#334155" stroke-width="1"/>
+    <text x="774" y="34" font-family="system-ui, sans-serif" font-weight="600" font-size="16" fill="#A78BFA">📊 Інтерактивний калькулятор</text>
+  </g>
+</svg>

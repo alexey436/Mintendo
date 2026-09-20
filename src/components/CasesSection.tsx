@@ -84,7 +84,7 @@ export const CasesSection: React.FC<CasesSectionProps> = ({
               <div className="relative h-60 sm:h-72 overflow-hidden">
                 <img
                   src={item.image}
-                  alt={item.title}
+                  alt={`Кейс розробки сайту Mintendo: ${item.title} – ${item.categoryLabel}`}
                   loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />

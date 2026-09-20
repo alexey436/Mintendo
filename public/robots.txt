@@ -1,0 +1,6 @@
+# robots.txt for Mintendo Web Studio
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://alexey436.github.io/Mintendo/sitemap.xml
