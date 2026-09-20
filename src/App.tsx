@@ -3,21 +3,34 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { PainPointsSection } from './components/PainPointsSection';
 import { SolutionFeaturesSection } from './components/SolutionFeaturesSection';
 import { AboutSection } from './components/AboutSection';
-import { CalculatorSection } from './components/CalculatorSection';
-import { CasesSection } from './components/CasesSection';
-import { WorkflowSection } from './components/WorkflowSection';
-import { FaqSection } from './components/FaqSection';
-import { FooterCtaSection } from './components/FooterCtaSection';
 import { StickyMobileBar } from './components/StickyMobileBar';
-import { ConsultationModal } from './components/ConsultationModal';
 import { BackgroundVisuals } from './components/BackgroundVisuals';
-import { ScrollReveal } from './components/ScrollReveal';
+
+// Code-split below-the-fold heavy components for optimal mobile PageSpeed (LCP & TBT)
+const CalculatorSection = lazy(() =>
+  import('./components/CalculatorSection').then((m) => ({ default: m.CalculatorSection }))
+);
+const CasesSection = lazy(() =>
+  import('./components/CasesSection').then((m) => ({ default: m.CasesSection }))
+);
+const WorkflowSection = lazy(() =>
+  import('./components/WorkflowSection').then((m) => ({ default: m.WorkflowSection }))
+);
+const FaqSection = lazy(() =>
+  import('./components/FaqSection').then((m) => ({ default: m.FaqSection }))
+);
+const FooterCtaSection = lazy(() =>
+  import('./components/FooterCtaSection').then((m) => ({ default: m.FooterCtaSection }))
+);
+const ConsultationModal = lazy(() =>
+  import('./components/ConsultationModal').then((m) => ({ default: m.ConsultationModal }))
+);
 
 export default function App() {
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
@@ -90,20 +103,28 @@ export default function App() {
           onScrollToCalculator={scrollToCalculator}
         />
 
-        {/* Interactive Cost & Timeline Calculator */}
-        <CalculatorSection onSelectCalculation={handleCalculationSelect} />
+        <Suspense
+          fallback={
+            <div className="py-24 flex items-center justify-center">
+              <div className="w-8 h-8 border-2 border-emerald-500/30 border-t-emerald-400 rounded-full animate-spin" />
+            </div>
+          }
+        >
+          {/* Interactive Cost & Timeline Calculator */}
+          <CalculatorSection onSelectCalculation={handleCalculationSelect} />
 
-        {/* Case Studies & Social Proof */}
-        <CasesSection onSelectCaseConsultation={handleCaseSelect} />
+          {/* Case Studies & Social Proof */}
+          <CasesSection onSelectCaseConsultation={handleCaseSelect} />
 
-        {/* 5-Step Workflow & Online Project Tracker */}
-        <WorkflowSection />
+          {/* 5-Step Workflow & Online Project Tracker */}
+          <WorkflowSection />
 
-        {/* FAQ Section */}
-        <FaqSection onOpenConsultation={() => handleOpenConsultation()} />
+          {/* FAQ Section */}
+          <FaqSection onOpenConsultation={() => handleOpenConsultation()} />
 
-        {/* Footer & Final Contact CTA */}
-        <FooterCtaSection />
+          {/* Footer & Final Contact CTA */}
+          <FooterCtaSection />
+        </Suspense>
       </main>
 
       {/* Floating Sticky Mobile CTA Bar */}
@@ -112,12 +133,16 @@ export default function App() {
         onOpenConsultation={() => handleOpenConsultation()}
       />
 
-      {/* Consultation & Quote Capture Modal */}
-      <ConsultationModal
-        isOpen={isConsultationOpen}
-        onClose={() => setIsConsultationOpen(false)}
-        presetData={modalPresetData}
-      />
+      {/* Consultation & Quote Capture Modal (Loaded on demand only when opened) */}
+      {isConsultationOpen && (
+        <Suspense fallback={null}>
+          <ConsultationModal
+            isOpen={isConsultationOpen}
+            onClose={() => setIsConsultationOpen(false)}
+            presetData={modalPresetData}
+          />
+        </Suspense>
+      )}
     </div>
   );
 }

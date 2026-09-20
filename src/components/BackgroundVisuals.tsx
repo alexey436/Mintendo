@@ -28,66 +28,23 @@ export const BackgroundVisuals: React.FC = () => {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(16,185,129,0.15),rgba(255,255,255,0))]" />
 
         {/* Floating Orb 1: Emerald (Top Right) */}
-        <motion.div
-          animate={{
-            x: [0, 40, -20, 0],
-            y: [0, -50, 20, 0],
-            scale: [1, 1.15, 0.95, 1],
-          }}
-          transition={{
-            duration: 16,
-            repeat: Infinity,
-            repeatType: 'reverse',
-            ease: 'easeInOut',
-          }}
-          className="absolute -top-20 -right-20 w-72 sm:w-[500px] h-72 sm:h-[500px] rounded-full bg-emerald-500/12 blur-[100px] sm:blur-[140px]"
+        <div
+          className="anim-orb-1 absolute -top-20 -right-20 w-72 sm:w-[500px] h-72 sm:h-[500px] rounded-full bg-emerald-500/12 blur-[60px] sm:blur-[120px] pointer-events-none"
         />
 
         {/* Floating Orb 2: Cyan / Blue (Middle Left) */}
-        <motion.div
-          animate={{
-            x: [0, -30, 40, 0],
-            y: [0, 40, -30, 0],
-            scale: [0.9, 1.1, 1, 0.9],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            repeatType: 'reverse',
-            ease: 'easeInOut',
-          }}
-          className="absolute top-1/3 -left-32 w-80 sm:w-[550px] h-80 sm:h-[550px] rounded-full bg-cyan-600/10 blur-[110px] sm:blur-[150px]"
+        <div
+          className="anim-orb-2 absolute top-1/3 -left-32 w-80 sm:w-[550px] h-80 sm:h-[550px] rounded-full bg-cyan-600/10 blur-[60px] sm:blur-[130px] pointer-events-none"
         />
 
         {/* Floating Orb 3: Violet / Teal (Bottom Right) */}
-        <motion.div
-          animate={{
-            x: [0, 50, -40, 0],
-            y: [0, -30, 50, 0],
-            scale: [1, 0.9, 1.15, 1],
-          }}
-          transition={{
-            duration: 24,
-            repeat: Infinity,
-            repeatType: 'reverse',
-            ease: 'easeInOut',
-          }}
-          className="absolute top-2/3 right-[-10%] w-72 sm:w-[480px] h-72 sm:h-[480px] rounded-full bg-teal-500/10 blur-[120px] sm:blur-[160px]"
+        <div
+          className="anim-orb-3 absolute top-2/3 right-[-10%] w-72 sm:w-[480px] h-72 sm:h-[480px] rounded-full bg-teal-500/10 blur-[60px] sm:blur-[130px] pointer-events-none"
         />
 
         {/* Floating Orb 4: Deep Indigo Glow (Near Bottom) */}
-        <motion.div
-          animate={{
-            y: [0, -40, 0],
-            opacity: [0.3, 0.6, 0.3],
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            repeatType: 'reverse',
-            ease: 'easeInOut',
-          }}
-          className="absolute bottom-10 left-1/4 w-60 sm:w-[420px] h-60 sm:h-[420px] rounded-full bg-blue-600/10 blur-[130px]"
+        <div
+          className="anim-orb-1 absolute bottom-10 left-1/4 w-60 sm:w-[420px] h-60 sm:h-[420px] rounded-full bg-blue-600/10 blur-[60px] sm:blur-[110px] pointer-events-none"
         />
 
         {/* Constellation / Glowing Star Dust particles */}

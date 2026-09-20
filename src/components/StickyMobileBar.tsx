@@ -15,7 +15,7 @@ export const StickyMobileBar: React.FC<StickyMobileBarProps> = ({
       {/* Quick Calculator Button */}
       <button
         onClick={onScrollToCalculator}
-        className="flex-1 py-2.5 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-emerald-500/20 active:scale-[0.98] transition-all"
+        className="flex-1 min-h-[44px] py-2.5 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-emerald-500/20 active:scale-[0.98] transition-all"
       >
         <Calculator className="w-4 h-4" />
         <span>Розрахувати ціну</span>
@@ -27,7 +27,7 @@ export const StickyMobileBar: React.FC<StickyMobileBarProps> = ({
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Telegram"
-        className="p-2.5 rounded-xl bg-slate-800 text-blue-400 border border-slate-700 flex items-center justify-center shrink-0 active:scale-95 transition-all"
+        className="min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-slate-800 text-blue-400 border border-slate-700 flex items-center justify-center shrink-0 active:scale-95 transition-all"
       >
         <Send className="w-4 h-4" />
       </a>
@@ -36,7 +36,7 @@ export const StickyMobileBar: React.FC<StickyMobileBarProps> = ({
       <button
         onClick={onOpenConsultation}
         aria-label="Консультація"
-        className="py-2.5 px-3 rounded-xl bg-slate-800 text-slate-200 border border-slate-700 font-semibold text-xs flex items-center justify-center gap-1 shrink-0 active:scale-95 transition-all"
+        className="min-h-[44px] py-2.5 px-3 rounded-xl bg-slate-800 text-slate-200 border border-slate-700 font-semibold text-xs flex items-center justify-center gap-1 shrink-0 active:scale-95 transition-all"
       >
         <PhoneCall className="w-3.5 h-3.5 text-emerald-400" />
         <span>Зв'язок</span>

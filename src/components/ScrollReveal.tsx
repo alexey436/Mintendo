@@ -14,7 +14,7 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   className = '',
   delay = 0,
   direction = 'up',
-  once = false, // Повторна поява блоків при кожному скролі
+  once = true, // Оптимізація для швидкості: один плавний вхід без зайвого навантаження CPU
 }) => {
   const getOffset = () => {
     switch (direction) {

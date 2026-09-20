@@ -32,3 +32,34 @@ body {
   background: #334155;
 }
 
+/* GPU-accelerated off-main-thread ambient animations */
+@keyframes orbFloat1 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(35px, -45px, 0) scale(1.1); }
+}
+
+@keyframes orbFloat2 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(0.95); }
+  50% { transform: translate3d(-30px, 35px, 0) scale(1.08); }
+}
+
+@keyframes orbFloat3 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(40px, -20px, 0) scale(1.05); }
+}
+
+.anim-orb-1 {
+  animation: orbFloat1 18s ease-in-out infinite;
+  will-change: transform;
+}
+
+.anim-orb-2 {
+  animation: orbFloat2 24s ease-in-out infinite;
+  will-change: transform;
+}
+
+.anim-orb-3 {
+  animation: orbFloat3 22s ease-in-out infinite;
+  will-change: transform;
+}
+

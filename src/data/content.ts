@@ -250,7 +250,7 @@ export const CASES_DATA: CaseStudy[] = [
       { label: 'Органічний трафік', value: '+180%' },
     ],
     tags: ['B2B', 'SEO структура', 'Калькулятор вартості', 'Kommo CRM', '3 мови'],
-    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80',
+    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=75',
     duration: '22 робочі дні',
   },
   {
@@ -268,7 +268,7 @@ export const CASES_DATA: CaseStudy[] = [
       { label: 'Мобільні замовлення', value: '74%' },
     ],
     tags: ['E-commerce', 'Checkout оптимізація', 'Apple Pay', 'Фільтри 60fps', 'SEO категорій'],
-    image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80',
+    image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=75',
     duration: '30 робочих днів',
   },
   {
@@ -286,7 +286,7 @@ export const CASES_DATA: CaseStudy[] = [
       { label: 'Навантаження без збоїв', value: '100%' },
     ],
     tags: ['LMS', 'Кабінет учня', 'Stripe підписки', 'Telegram сповіщення', 'Відеоплеєр'],
-    image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80',
+    image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=75',
     duration: '28 робочих днів',
   },
   {
@@ -304,7 +304,7 @@ export const CASES_DATA: CaseStudy[] = [
       { label: 'Продажів у 1-й місяць', value: '12 котеджів' },
     ],
     tags: ['Нерухомість', 'CRO квіз', 'Інтерактивний генплан', 'KommoCRM', 'Google Ads'],
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
+    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=75',
     duration: '15 робочих днів',
   },
 ];
