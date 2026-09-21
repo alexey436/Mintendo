@@ -58,7 +58,7 @@ export async function sendLeadToTelegram(data: LeadData): Promise<{ ok: boolean;
       timeStyle: 'short',
     }).format(new Date());
 
-    let text = `🚀 <b>Нова заявка з сайту Mintendo Studio</b>\n\n`;
+    let text = `🚀 <b>Нова заявка з сайту Monvorge studio</b>\n\n`;
     text += `👤 <b>Клієнт:</b> ${escapeHtml(data.name)}\n`;
     text += `📞 <b>Контакт:</b> <code>${escapeHtml(data.contact)}</code>\n`;
     text += `💬 <b>Зручний канал:</b> ${channelLabel}\n`;

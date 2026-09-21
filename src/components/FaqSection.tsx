@@ -93,7 +93,7 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ onOpenConsultation }) =>
                   Залишилося специфічне запитання щодо вашого проєкту?
                 </h3>
                 <p className="text-xs text-slate-400">
-                  Тімлід Mintendo відповість вам особисто протягом 15 хвилин.
+                  Тімлід Monvorge studio відповість вам особисто протягом 15 хвилин.
                 </p>
               </div>
             </div>

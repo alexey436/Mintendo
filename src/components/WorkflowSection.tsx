@@ -140,7 +140,7 @@ export const WorkflowSection: React.FC = () => {
               </div>
             </div>
 
-            {/* Right Column: Live Mintendo Client Portal Mockup */}
+            {/* Right Column: Live Monvorge Client Portal Mockup */}
             <div className="lg:col-span-5">
               <div className="rounded-xl border border-slate-700 bg-slate-950 p-5 shadow-inner">
                 
@@ -149,7 +149,7 @@ export const WorkflowSection: React.FC = () => {
                   <div className="flex items-center gap-2">
                     <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
                     <span className="text-xs font-bold text-white font-['Plus_Jakarta_Sans']">
-                      Mintendo Client Portal
+                      Monvorge Client Portal
                     </span>
                   </div>
                   <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800/40">
@@ -184,7 +184,7 @@ export const WorkflowSection: React.FC = () => {
                   </div>
                   <div className="text-[11px] text-slate-400 flex items-center justify-between pt-1">
                     <span>Відповідальний тімлід:</span>
-                    <span className="text-slate-200">Mintendo Tech Lead</span>
+                    <span className="text-slate-200">Monvorge Tech Lead</span>
                   </div>
                 </div>
 

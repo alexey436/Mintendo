@@ -26,7 +26,7 @@ export const StickyMobileBar: React.FC<StickyMobileBarProps> = ({
 
       {/* Telegram Link */}
       <a
-        href="https://t.me/mintendovip"
+        href="https://t.me/Monvorge"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Чат у Telegram"

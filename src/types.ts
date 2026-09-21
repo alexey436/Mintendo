@@ -53,7 +53,7 @@ export interface PainPoint {
   title: string;
   clientPain: string;
   consequences: string;
-  mintendoSolution: string;
+  studioSolution: string;
   guaranteeBadge: string;
 }
 

@@ -116,7 +116,7 @@ export const SolutionFeaturesSection: React.FC = () => {
           <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/50 border border-emerald-800/50 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-4">
               <Cpu className="w-3.5 h-3.5" />
-              <span>Стандарти студії Mintendo</span>
+              <span>Стандарти студії Monvorge</span>
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-4 font-['Plus_Jakarta_Sans']">
               Розробка, орієнтована на окупність та прозорість

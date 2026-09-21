@@ -51,7 +51,7 @@ export const CasesSection: React.FC<CasesSectionProps> = ({
               Результати, підтверджені цифрами та конверсією
             </h2>
             <p className="text-slate-300 text-base sm:text-lg">
-              Кожен проєкт Mintendo — це інвестиція з прогнозованою окупністю. Погляньте, як наші рішення трансформували бізнес наших клієнтів.
+              Кожен проєкт Monvorge studio — це інвестиція з прогнозованою окупністю. Погляньте, як наші рішення трансформували бізнес наших клієнтів.
             </p>
 
             {/* Category Filter Pills - Mobile scrollable & Desktop wrapped */}
@@ -84,7 +84,7 @@ export const CasesSection: React.FC<CasesSectionProps> = ({
               <div className="relative h-60 sm:h-72 overflow-hidden">
                 <img
                   src={item.image}
-                  alt={`Кейс розробки сайту Mintendo: ${item.title} – ${item.categoryLabel}`}
+                  alt={`Кейс розробки сайту Monvorge studio: ${item.title} – ${item.categoryLabel}`}
                   width={640}
                   height={360}
                   loading="lazy"
@@ -225,7 +225,7 @@ export const CasesSection: React.FC<CasesSectionProps> = ({
             </div>
 
             <div className="space-y-3 mb-6">
-              <h4 className="text-sm font-bold text-white">Що було зроблено командою Mintendo:</h4>
+              <h4 className="text-sm font-bold text-white">Що було зроблено командою Monvorge studio:</h4>
               <ul className="space-y-2 text-xs text-slate-300">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0" />

@@ -188,7 +188,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
               Запит зафіксовано!
             </h3>
             <p className="text-sm text-slate-300">
-              Дякуємо, <strong>{name}</strong>. Тімлід Mintendo зв'яжеться з вами за вказаним контактом <strong className="text-emerald-400">{finalContactDisplay || contact}</strong> протягом 15 хвилин для узгодження деталей.
+              Дякуємо, <strong>{name}</strong>. Тімлід Monvorge studio зв'яжеться з вами за вказаним контактом <strong className="text-emerald-400">{finalContactDisplay || contact}</strong> протягом 15 хвилин для узгодження деталей.
             </p>
             <div className="pt-4">
               <button
@@ -204,7 +204,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
             <div className="mb-6">
               <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-950/70 border border-emerald-800/50 text-emerald-400 text-xs font-semibold mb-2">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>Mintendo Direct Request</span>
+                <span>Monvorge Direct Request</span>
               </div>
               <h3 className="text-xl sm:text-2xl font-bold text-white font-['Plus_Jakarta_Sans']">
                 {presetData?.projectType === 'Безкоштовний аудит сайту'

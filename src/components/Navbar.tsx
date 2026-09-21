@@ -55,7 +55,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
           <div className="flex flex-col">
             <span className="text-xl font-bold tracking-tight text-white font-['Plus_Jakarta_Sans'] group-hover:text-emerald-400 transition-colors">
-              Mintendo
+              Monvorge
             </span>
             <span className="text-[10px] uppercase font-semibold tracking-wider text-slate-400">
               Web & CRO Studio
@@ -91,13 +91,13 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Quick Telegram link (icon only) */}
           <a
-            href="https://t.me/mintendovip"
+            href="https://t.me/Monvorge"
             target="_blank"
             rel="noopener noreferrer"
             id="nav-telegram-btn"
             className="inline-flex items-center justify-center w-9 h-9 text-blue-400 hover:text-white bg-slate-900/70 hover:bg-blue-500/20 border border-slate-700/70 hover:border-blue-500/60 rounded-lg transition-all shadow-sm"
-            title="Швидкий чат у Telegram (@mintendovip)"
-            aria-label="Чат у Telegram: @mintendovip"
+            title="Швидкий чат у Telegram (@Monvorge)"
+            aria-label="Чат у Telegram: @Monvorge"
           >
             <Send className="w-4 h-4" />
           </a>
@@ -181,13 +181,13 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span>+38 (093) 593-89-81</span>
             </a>
             <a
-              href="https://t.me/mintendovip"
+              href="https://t.me/Monvorge"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 text-blue-400 font-medium hover:underline"
             >
               <Send className="w-3.5 h-3.5" />
-              <span>@mintendovip</span>
+              <span>@Monvorge</span>
             </a>
           </div>
         </div>

@@ -120,7 +120,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
           <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-20">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-950/70 border border-emerald-600/40 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-4 shadow-sm shadow-emerald-950/50">
               <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-              <span>3 роки досвіду та твердих результатів • Mintendo Studio</span>
+              <span>3 роки досвіду та твердих результатів • Monvorge studio</span>
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight mb-5 font-['Plus_Jakarta_Sans'] leading-tight">
               3 роки створюємо сайти, які щодня{' '}
@@ -129,7 +129,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
               </span>
             </h2>
             <p className="text-slate-300 text-base sm:text-lg leading-relaxed">
-              Mintendo — це інженерно-маркетингова команда. Ми не займаємося «сайтами заради галочки».
+              Monvorge studio — це інженерно-маркетингова команда. Ми не займаємося «сайтами заради галочки».
               За 3 роки на ринку ми вибудували процеси так, щоб кожен вкладений вами долар у розробку повертався
               новими клієнтами та високими чеками.
             </p>
@@ -187,11 +187,11 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                 НАШІ СТАНДАРТИ РОБОТИ
               </span>
               <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white font-['Plus_Jakarta_Sans'] mb-3">
-                Чому 85+ клієнтів обрали саме команду Mintendo
+                Чому 85+ клієнтів обрали саме команду Monvorge studio
               </h3>
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
                 Ми добре знаємо, як часто бізнеси обпікаються на недобросовісних підрядниках: зриви термінів,
-                зникнення розробників та крива верстка на мобільних. Тому в Mintendo впроваджено 4 непорушних правила:
+                зникнення розробників та крива верстка на мобільних. Тому в Monvorge studio впроваджено 4 непорушних правила:
               </p>
             </div>
 

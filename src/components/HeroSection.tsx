@@ -34,7 +34,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {/* Top Eyebrow Tag */}
             <div className="inline-flex flex-wrap items-center gap-1.5 sm:gap-2 px-3 py-1.5 rounded-full bg-slate-900/90 border border-emerald-500/30 text-emerald-400 text-[11px] sm:text-xs font-semibold tracking-wide w-fit mb-4 sm:mb-6 shadow-sm shadow-emerald-950">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-              <span>Студія веб-розробки • Mintendo</span>
+              <span>Студія веб-розробки • Monvorge studio</span>
               <span aria-hidden="true" className="text-slate-500">|</span>
               <span className="text-slate-300">Гарантія результату та термінів</span>
             </div>
@@ -43,7 +43,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-extrabold text-white tracking-tight leading-[1.2] sm:leading-[1.15] mb-4 sm:mb-6 font-['Plus_Jakarta_Sans']">
               Сайти для бізнесу від{' '}
               <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-blue-400 bg-clip-text text-transparent">
-                Mintendo
+                Monvorge studio
               </span>
               , які приносять клієнтів, а не просто висять у мережі.
             </h1>
@@ -154,11 +154,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-amber-500/80 shrink-0" />
                   <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-500/80 shrink-0" />
                   <span className="ml-1 sm:ml-2 text-[11px] sm:text-xs font-mono text-slate-400 bg-slate-900 px-2 py-0.5 rounded border border-slate-800 truncate max-w-[130px] sm:max-w-none">
-                    mintendo.agency/live-audit
+                    monvorge.studio/live-audit
                   </span>
                 </div>
                 <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-semibold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-800/50 shrink-0">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                   ONLINE PROD
                 </span>
               </div>
@@ -203,7 +203,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                       <div className="w-[18%] h-full bg-slate-600 rounded-full" />
                     </div>
                     <div className="flex justify-between text-[11px] text-emerald-400 font-medium pt-1">
-                      <span>Сайт від Mintendo</span>
+                      <span>Сайт від Monvorge studio</span>
                       <span className="font-bold">5.8%</span>
                     </div>
                     <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
@@ -242,7 +242,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 >
                   <span className="flex items-center gap-2">
                     <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-                    Спробувати інтерактивний калькулятор Mintendo
+                    Спробувати інтерактивний калькулятор Monvorge studio
                   </span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </button>

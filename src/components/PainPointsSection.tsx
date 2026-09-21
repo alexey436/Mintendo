@@ -44,7 +44,7 @@ export const PainPointsSection: React.FC<PainPointsSectionProps> = ({
               Чому 80% замовників шкодують про витрачений бюджет?
             </h2>
             <p className="text-slate-300 text-base sm:text-lg">
-              Більшість студій та фрілансерів продають просто гарну картинку або набір коду. Ми в Mintendo починаємо з бізнес-результату, захищаючи ваш спокій і гроші.
+              Більшість студій та фрілансерів продають просто гарну картинку або набір коду. Ми в Monvorge studio починаємо з бізнес-результату, захищаючи ваш спокій і гроші.
             </p>
 
             {/* Perspective switch buttons */}
@@ -70,7 +70,7 @@ export const PainPointsSection: React.FC<PainPointsSectionProps> = ({
                 }`}
               >
                 <Sparkles className="w-3.5 h-3.5 shrink-0" />
-                <span>Зелена зона Mintendo</span>
+                <span>Зелена зона Monvorge studio</span>
               </button>
             </div>
           </div>
@@ -111,15 +111,15 @@ export const PainPointsSection: React.FC<PainPointsSectionProps> = ({
                   </div>
                 )}
 
-                {/* Bottom part: Mintendo Solution (Green / Emerald Zone) */}
+                {/* Bottom part: Monvorge studio Solution (Green / Emerald Zone) */}
                 <div className="p-5 sm:p-7 bg-gradient-to-br from-emerald-950/30 via-slate-900/90 to-slate-900 border-t border-emerald-900/40 flex-1 flex flex-col justify-between">
                   <div>
                     <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-400 mb-2">
                       <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0" />
-                      <span>Як це вирішено в Mintendo:</span>
+                      <span>Як це вирішено в Monvorge studio:</span>
                     </div>
                     <p className="text-xs sm:text-sm text-slate-200 leading-relaxed mb-4">
-                      {item.mintendoSolution}
+                      {item.studioSolution}
                     </p>
                   </div>
 

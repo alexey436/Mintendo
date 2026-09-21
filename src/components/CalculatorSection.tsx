@@ -152,13 +152,13 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({
 
   const getTelegramUrl = () => {
     const pType = PROJECT_TYPES_CONFIG[calcState.projectType].name;
-    const msg = `Вітаю, Mintendo! Я розрахував проєкт на сайті:
+    const msg = `Вітаю, Monvorge studio! Я розрахував проєкт на сайті:
 - Тип: ${pType}
 - Бюджет: ~$${calculation.priceUSD}
 - Термін: ~${calculation.days} роб. днів
 - Модулі: ${calcState.selectedModules.length} шт.
 Хочу зафіксувати ціну та отримати комерційну пропозицію!`;
-    return `https://t.me/mintendovip?text=${encodeURIComponent(msg)}`;
+    return `https://t.me/Monvorge?text=${encodeURIComponent(msg)}`;
   };
 
   return (
@@ -542,7 +542,7 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({
               <div className="mt-4 text-center">
                 <span className="text-[11px] text-slate-400 flex items-center justify-center gap-1">
                   <ShieldAlert className="w-3 h-3 text-emerald-400" />
-                  Гарантія незмінності ціни (Fixed Price) від Mintendo
+                  Гарантія незмінності ціни (Fixed Price) від Monvorge studio
                 </span>
               </div>
 

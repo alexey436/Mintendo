@@ -194,7 +194,7 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
                   Дякуємо! Вашу заявку прийнято
                 </h3>
                 <p className="text-sm text-slate-300 max-w-md mx-auto">
-                  Тімлід Mintendo вже вивчає інформацію. Ми зв'яжемося з вами через <strong className="text-emerald-400 font-mono">{finalContactDisplay || formData.contact}</strong> протягом 15 хвилин у робочий час.
+                  Тімлід Monvorge studio вже вивчає інформацію. Ми зв'яжемося з вами через <strong className="text-emerald-400 font-mono">{finalContactDisplay || formData.contact}</strong> протягом 15 хвилин у робочий час.
                 </p>
                 <div className="pt-4">
                   <button
@@ -410,7 +410,7 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
             </ScrollReveal>
           </div>
 
-          {/* Right: Direct Messengers & Mintendo Guarantees */}
+          {/* Right: Direct Messengers & Monvorge studio Guarantees */}
           <div className="lg:col-span-5">
             <ScrollReveal direction="up" delay={0.08}>
               <div className="flex flex-col justify-between space-y-6">
@@ -426,7 +426,7 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
 
               <div className="space-y-2.5">
                 <a
-                  href="https://t.me/mintendovip"
+                  href="https://t.me/Monvorge"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-3.5 rounded-xl bg-blue-600/10 hover:bg-blue-600/20 border border-blue-500/30 text-blue-300 hover:text-white flex items-center justify-between transition-all group"
@@ -437,7 +437,7 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
                     </div>
                     <div>
                       <div className="text-xs font-bold">Написати в Telegram</div>
-                      <div className="text-[10px] text-slate-400">@mintendovip (онлайн)</div>
+                      <div className="text-[10px] text-slate-400">@Monvorge (онлайн)</div>
                     </div>
                   </div>
                   <ArrowRight className="w-4 h-4 text-blue-400 group-hover:translate-x-1 transition-transform" />
@@ -479,14 +479,14 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
               </div>
             </div>
 
-            {/* Mintendo USP Manifesto Box */}
+            {/* Monvorge studio USP Manifesto Box */}
             <div className="p-6 rounded-3xl bg-gradient-to-br from-emerald-950/40 via-slate-900 to-slate-900 border border-emerald-500/20 text-xs text-slate-300 space-y-2">
               <div className="flex items-center gap-2 text-emerald-400 font-bold uppercase tracking-wider text-[11px]">
                 <ShieldCheck className="w-4 h-4" />
-                <span>Офіційна місія бренду Mintendo</span>
+                <span>Офіційна місія бренду Monvorge studio</span>
               </div>
               <p className="italic text-slate-200 leading-relaxed font-['Plus_Jakarta_Sans']">
-                «Mintendo — створюємо сайти, які окупаються за рахунок продуманої конверсії (CRO), залізної швидкості завантаження та SEO-оптимізації з першого дня. Прозора ціна та контроль етапів розробки онлайн».
+                «Monvorge studio — створюємо сайти, які окупаються за рахунок продуманої конверсії (CRO), залізної швидкості завантаження та SEO-оптимізації з першого дня. Прозора ціна та контроль етапів розробки онлайн».
               </p>
             </div>
 
@@ -499,7 +499,7 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
         {/* Bottom Copyright and Meta */}
         <div className="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-slate-300 font-['Plus_Jakarta_Sans']">Mintendo Web Studio</span>
+            <span className="font-bold text-slate-300 font-['Plus_Jakarta_Sans']">Monvorge studio</span>
             <span>© {new Date().getFullYear()}. Усі права захищено.</span>
           </div>
           <div className="flex flex-wrap items-center justify-center sm:justify-end gap-4 sm:gap-6 text-slate-400">

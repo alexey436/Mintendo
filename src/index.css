@@ -69,11 +69,12 @@ body {
   will-change: transform;
 }
 
-/* Mobile GPU optimization: disable continuous blur animations on mobile screens to eliminate TBT */
+/* Mobile GPU optimization: disable continuous animations on mobile screens to eliminate TBT */
 @media (max-width: 768px) {
   .anim-orb-1,
   .anim-orb-2,
-  .anim-orb-3 {
+  .anim-orb-3,
+  .animate-hero-float {
     animation: none !important;
     will-change: auto !important;
   }

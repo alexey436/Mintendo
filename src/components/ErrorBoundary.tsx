@@ -26,7 +26,7 @@ export class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       return (
         <div style={{ minHeight: '100vh', backgroundColor: '#0B0F19', color: '#ffffff', padding: '3rem', fontFamily: 'sans-serif', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
-          <h1 style={{ fontSize: '1.75rem', fontWeight: 'bold', marginBottom: '1rem', color: '#10b981' }}>Mintendo Web Studio</h1>
+          <h1 style={{ fontSize: '1.75rem', fontWeight: 'bold', marginBottom: '1rem', color: '#10b981' }}>Monvorge studio</h1>
           <p style={{ color: '#94a3b8', marginBottom: '1.5rem', maxWidth: '500px' }}>
             Виникла помилка під час рендерингу інтерфейсу. Спробуйте оновити сторінку.
           </p>
