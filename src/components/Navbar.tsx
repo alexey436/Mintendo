@@ -91,13 +91,13 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Quick Telegram link (icon only) */}
           <a
-            href="https://t.me/mintendo_studio"
+            href="https://t.me/mintendovip"
             target="_blank"
             rel="noopener noreferrer"
             id="nav-telegram-btn"
             className="inline-flex items-center justify-center w-9 h-9 text-blue-400 hover:text-white bg-slate-900/70 hover:bg-blue-500/20 border border-slate-700/70 hover:border-blue-500/60 rounded-lg transition-all shadow-sm"
-            title="Швидкий чат у Telegram (@mintendo_studio)"
-            aria-label="Чат у Telegram: @mintendo_studio"
+            title="Швидкий чат у Telegram (@mintendovip)"
+            aria-label="Чат у Telegram: @mintendovip"
           >
             <Send className="w-4 h-4" />
           </a>
@@ -181,13 +181,13 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span>+38 (093) 593-89-81</span>
             </a>
             <a
-              href="https://t.me/mintendo_studio"
+              href="https://t.me/mintendovip"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 text-blue-400 font-medium hover:underline"
             >
               <Send className="w-3.5 h-3.5" />
-              <span>@mintendo_studio</span>
+              <span>@mintendovip</span>
             </a>
           </div>
         </div>

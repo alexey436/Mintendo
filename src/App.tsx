@@ -6,13 +6,19 @@
 import React, { useState, Suspense, lazy } from 'react';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
-import { PainPointsSection } from './components/PainPointsSection';
-import { SolutionFeaturesSection } from './components/SolutionFeaturesSection';
-import { AboutSection } from './components/AboutSection';
 import { StickyMobileBar } from './components/StickyMobileBar';
 import { BackgroundVisuals } from './components/BackgroundVisuals';
 
 // Code-split below-the-fold heavy components for optimal mobile PageSpeed (LCP & TBT)
+const PainPointsSection = lazy(() =>
+  import('./components/PainPointsSection').then((m) => ({ default: m.PainPointsSection }))
+);
+const SolutionFeaturesSection = lazy(() =>
+  import('./components/SolutionFeaturesSection').then((m) => ({ default: m.SolutionFeaturesSection }))
+);
+const AboutSection = lazy(() =>
+  import('./components/AboutSection').then((m) => ({ default: m.AboutSection }))
+);
 const CalculatorSection = lazy(() =>
   import('./components/CalculatorSection').then((m) => ({ default: m.CalculatorSection }))
 );
@@ -80,36 +86,37 @@ export default function App() {
         onScrollToCalculator={scrollToCalculator}
       />
 
-      <main className="relative z-10">
-        {/* Hero Section */}
+      <main className="relative z-10 pb-20 md:pb-0">
+        {/* Hero Section - rendered immediately for lightning-fast LCP */}
         <HeroSection
           onScrollToCalculator={scrollToCalculator}
           onOpenConsultation={() => handleOpenConsultation()}
         />
 
-        {/* Pain Points Section */}
-        <PainPointsSection
-          onOpenConsultation={() =>
-            handleOpenConsultation({ projectType: 'Безкоштовний аудит сайту' })
-          }
-        />
-
-        {/* Solutions & Core Advantages Section (Spotlight Cards) */}
-        <SolutionFeaturesSection />
-
-        {/* About Us / Experience & Stats (3 years, 85+ projects, principles) */}
-        <AboutSection
-          onOpenConsultation={() => handleOpenConsultation()}
-          onScrollToCalculator={scrollToCalculator}
-        />
-
+        {/* Below-the-fold content loaded asynchronously with zero layout shift */}
         <Suspense
           fallback={
-            <div className="py-24 flex items-center justify-center">
+            <div className="py-20 flex items-center justify-center">
               <div className="w-8 h-8 border-2 border-emerald-500/30 border-t-emerald-400 rounded-full animate-spin" />
             </div>
           }
         >
+          {/* Pain Points Section */}
+          <PainPointsSection
+            onOpenConsultation={() =>
+              handleOpenConsultation({ projectType: 'Безкоштовний аудит сайту' })
+            }
+          />
+
+          {/* Solutions & Core Advantages Section (Spotlight Cards) */}
+          <SolutionFeaturesSection />
+
+          {/* About Us / Experience & Stats (3 years, 85+ projects, principles) */}
+          <AboutSection
+            onOpenConsultation={() => handleOpenConsultation()}
+            onScrollToCalculator={scrollToCalculator}
+          />
+
           {/* Interactive Cost & Timeline Calculator */}
           <CalculatorSection onSelectCalculation={handleCalculationSelect} />
 

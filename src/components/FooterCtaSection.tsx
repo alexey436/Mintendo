@@ -421,7 +421,7 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
 
               <div className="space-y-2.5">
                 <a
-                  href="https://t.me/mintendo_studio"
+                  href="https://t.me/mintendovip"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-3.5 rounded-xl bg-blue-600/10 hover:bg-blue-600/20 border border-blue-500/30 text-blue-300 hover:text-white flex items-center justify-between transition-all group"
@@ -432,7 +432,7 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
                     </div>
                     <div>
                       <div className="text-xs font-bold">Написати в Telegram</div>
-                      <div className="text-[10px] text-slate-400">@mintendo_studio (онлайн)</div>
+                      <div className="text-[10px] text-slate-400">@mintendovip (онлайн)</div>
                     </div>
                   </div>
                   <ArrowRight className="w-4 h-4 text-blue-400 group-hover:translate-x-1 transition-transform" />

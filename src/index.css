@@ -63,3 +63,25 @@ body {
   will-change: transform;
 }
 
+/* GPU-accelerated float animation for Hero Preview Card (replaces JS Framer Motion on critical path) */
+@keyframes heroCardFloat {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -6px, 0);
+  }
+}
+
+.animate-hero-float {
+  animation: heroCardFloat 5s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Mobile Touch & Performance Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  button, a {
+    touch-action: manipulation;
+  }
+}
+

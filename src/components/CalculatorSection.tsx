@@ -158,7 +158,7 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({
 - Термін: ~${calculation.days} роб. днів
 - Модулі: ${calcState.selectedModules.length} шт.
 Хочу зафіксувати ціну та отримати комерційну пропозицію!`;
-    return `https://t.me/mintendo_studio?text=${encodeURIComponent(msg)}`;
+    return `https://t.me/mintendovip?text=${encodeURIComponent(msg)}`;
   };
 
   return (

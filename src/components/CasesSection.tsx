@@ -54,13 +54,13 @@ export const CasesSection: React.FC<CasesSectionProps> = ({
               Кожен проєкт Mintendo — це інвестиція з прогнозованою окупністю. Погляньте, як наші рішення трансформували бізнес наших клієнтів.
             </p>
 
-            {/* Category Filter Pills */}
-            <div className="flex flex-wrap items-center justify-center gap-2 mt-6 sm:mt-8">
+            {/* Category Filter Pills - Mobile scrollable & Desktop wrapped */}
+            <div className="flex overflow-x-auto sm:flex-wrap items-center justify-start sm:justify-center gap-2 mt-6 sm:mt-8 pb-2 sm:pb-0 px-2 sm:px-0 -mx-2 sm:mx-0">
               {categories.map((cat) => (
                 <button
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl transition-all cursor-pointer ${
+                  className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl whitespace-nowrap transition-all cursor-pointer shrink-0 ${
                     selectedCategory === cat.id
                       ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/25'
                       : 'bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 border border-slate-800'

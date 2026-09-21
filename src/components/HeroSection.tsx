@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'motion/react';
 import {
   ArrowRight,
   Calculator,
@@ -25,10 +24,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onOpenConsultation,
 }) => {
   return (
-    <section className="relative pt-24 pb-16 md:pt-36 md:pb-24 overflow-hidden">
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] sm:w-[900px] h-[450px] bg-gradient-to-tr from-emerald-500/15 via-blue-600/10 to-teal-400/5 blur-[120px] pointer-events-none rounded-full" />
-      <div className="absolute top-20 right-10 w-72 h-72 bg-blue-500/10 blur-[90px] pointer-events-none rounded-full" />
+    <section className="relative pt-20 pb-12 sm:pt-24 sm:pb-16 md:pt-36 md:pb-24 overflow-hidden">
+      {/* Background ambient lighting - optimized blur for mobile GPU */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] sm:w-[600px] md:w-[900px] h-[300px] sm:h-[450px] bg-gradient-to-tr from-emerald-500/15 via-blue-600/10 to-teal-400/5 blur-[50px] sm:blur-[100px] pointer-events-none rounded-full" />
+      <div className="absolute top-20 right-10 w-48 sm:w-72 h-48 sm:h-72 bg-blue-500/10 blur-[40px] sm:blur-[90px] pointer-events-none rounded-full" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center">
@@ -36,15 +35,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {/* Left Column: Value Proposition & CTAs */}
           <div className="lg:col-span-7 flex flex-col text-left">
             {/* Top Eyebrow Tag */}
-            <div className="inline-flex flex-wrap items-center gap-1.5 sm:gap-2 px-3 py-1.5 rounded-full bg-slate-900/90 border border-emerald-500/30 text-emerald-400 text-[11px] sm:text-xs font-semibold tracking-wide w-fit mb-5 sm:mb-6 shadow-sm shadow-emerald-950">
+            <div className="inline-flex flex-wrap items-center gap-1.5 sm:gap-2 px-3 py-1.5 rounded-full bg-slate-900/90 border border-emerald-500/30 text-emerald-400 text-[11px] sm:text-xs font-semibold tracking-wide w-fit mb-4 sm:mb-6 shadow-sm shadow-emerald-950">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
               <span>Студія веб-розробки • Mintendo</span>
               <span className="text-slate-600">|</span>
               <span className="text-slate-300">Гарантія результату та термінів</span>
             </div>
 
-            {/* Exact H1 from prompt */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-extrabold text-white tracking-tight leading-[1.2] sm:leading-[1.15] mb-5 sm:mb-6 font-['Plus_Jakarta_Sans']">
+            {/* Exact H1 from prompt - optimized for mobile viewports */}
+            <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-extrabold text-white tracking-tight leading-[1.2] sm:leading-[1.15] mb-4 sm:mb-6 font-['Plus_Jakarta_Sans']">
               Сайти для бізнесу від{' '}
               <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-blue-400 bg-clip-text text-transparent">
                 Mintendo
@@ -148,12 +147,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           {/* Right Column: Interactive Live Showcase Preview Card */}
           <div className="lg:col-span-5 relative">
-            {/* Outer card frame with glassmorphism */}
-            <motion.div
-              animate={{ y: [0, -6, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-              className="relative rounded-2xl bg-gradient-to-b from-slate-800/80 to-slate-950/90 border border-slate-700/80 p-4 sm:p-6 shadow-2xl shadow-black/50 backdrop-blur-sm"
-            >
+            {/* Outer card frame with GPU-accelerated CSS float (no JS motion overhead on critical path) */}
+            <div className="animate-hero-float relative rounded-2xl bg-gradient-to-b from-slate-800/80 to-slate-950/90 border border-slate-700/80 p-4 sm:p-6 shadow-2xl shadow-black/50 backdrop-blur-sm">
               
               {/* Browser Header Bar */}
               <div className="flex items-center justify-between pb-3.5 sm:pb-4 mb-4 border-b border-slate-800 gap-2">
@@ -256,7 +251,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 </button>
 
               </div>
-            </motion.div>
+            </div>
 
             {/* Decorative background glow behind the card */}
             <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-2xl blur-xl -z-10 opacity-70" />
