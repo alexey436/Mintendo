@@ -4,10 +4,9 @@ import path from 'path';
 import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
-  const repoName = process.env.GITHUB_REPOSITORY
-    ? `/${process.env.GITHUB_REPOSITORY.split('/')[1]}/`
-    : '/Mintendo/';
-  const base = process.env.NODE_ENV === 'production' ? repoName : '/';
+  // Use '/' as standard base for Hostinger and custom domains.
+  // If explicitly deploying to GitHub Pages, BASE_PATH or GITHUB_REPOSITORY will be respected.
+  const base = process.env.BASE_PATH || (process.env.GITHUB_REPOSITORY ? `/${process.env.GITHUB_REPOSITORY.split('/')[1]}/` : '/');
 
   return {
     base,

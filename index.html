@@ -30,9 +30,9 @@
     <link rel="dns-prefetch" href="https://images.unsplash.com" />
 
     <!-- Canonical URL & Relative Assets -->
-    <link rel="canonical" href="https://alexey436.github.io/Mintendo/" />
-    <link rel="sitemap" type="application/xml" title="Sitemap" href="./sitemap.xml" />
-    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="canonical" href="https://monvorge.com/" id="canonical-url" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <!-- Open Graph / Facebook / Telegram / LinkedIn -->
     <meta property="og:type" content="website" />
@@ -43,9 +43,9 @@
       property="og:description"
       content="Створюємо сайти для бізнесу, які окупаються: лендінги, корпоративні сайти, інтернет-магазини. Гарантія термінів за договором, швидкість 90+ та онлайн-калькулятор вартості."
     />
-    <meta property="og:url" content="https://alexey436.github.io/Mintendo/" />
-    <meta property="og:image" content="https://alexey436.github.io/Mintendo/og-image.svg" />
-    <meta property="og:image:secure_url" content="https://alexey436.github.io/Mintendo/og-image.svg" />
+    <meta property="og:url" content="/" id="og-url" />
+    <meta property="og:image" content="/og-image.svg" id="og-img" />
+    <meta property="og:image:secure_url" content="/og-image.svg" id="og-img-sec" />
     <meta property="og:image:type" content="image/svg+xml" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -59,20 +59,43 @@
       name="twitter:description"
       content="Розробка під ключ із фокусом на UX, SEO та високу конверсію (CRO). Фіксовані терміни, швидкість 90+ та онлайн-калькулятор вартості."
     />
-    <meta name="twitter:image" content="https://alexey436.github.io/Mintendo/og-image.svg" />
+    <meta name="twitter:image" content="/og-image.svg" id="tw-img" />
     <meta name="twitter:image:alt" content="Monvorge studio" />
 
-    <!-- Non-render-blocking Web Fonts with display=optional for instant FCP/LCP -->
+    <!-- Dynamic Domain Adaptation for Canonical & Social Cards on any Hosting Domain -->
+    <script>
+      (function() {
+        try {
+          if (typeof window !== 'undefined' && window.location) {
+            var origin = window.location.origin || '';
+            var pathname = window.location.pathname || '/';
+            var fullUrl = origin + (pathname.endsWith('/') ? pathname : pathname + '/');
+            var c = document.getElementById('canonical-url');
+            if (c) c.href = fullUrl;
+            var ogU = document.getElementById('og-url');
+            if (ogU) ogU.setAttribute('content', fullUrl);
+            var ogI = document.getElementById('og-img');
+            if (ogI) ogI.setAttribute('content', origin + '/og-image.svg');
+            var ogIS = document.getElementById('og-img-sec');
+            if (ogIS) ogIS.setAttribute('content', origin + '/og-image.svg');
+            var twI = document.getElementById('tw-img');
+            if (twI) twI.setAttribute('content', origin + '/og-image.svg');
+          }
+        } catch(e) {}
+      })();
+    </script>
+
+    <!-- Non-render-blocking Web Fonts with display=swap for instant FCP and crisp typography -->
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&display=optional"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&display=swap"
       media="print"
       onload="this.media='all'"
     />
     <noscript>
       <link
         rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&display=optional"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&display=swap"
       />
     </noscript>
 
@@ -98,19 +121,19 @@
         "@graph": [
           {
             "@type": "WebSite",
-            "@id": "https://alexey436.github.io/Mintendo/#website",
-            "url": "https://alexey436.github.io/Mintendo/",
+            "@id": "./#website",
+            "url": "./",
             "name": "Monvorge studio",
             "description": "Студія веб-розробки та CRO: сайти для бізнесу, які приносять клієнтів.",
             "inLanguage": "uk"
           },
           {
             "@type": "ProfessionalService",
-            "@id": "https://alexey436.github.io/Mintendo/#organization",
+            "@id": "./#organization",
             "name": "Monvorge studio",
-            "url": "https://alexey436.github.io/Mintendo/",
-            "logo": "https://alexey436.github.io/Mintendo/favicon.svg",
-            "image": "https://alexey436.github.io/Mintendo/og-image.svg",
+            "url": "./",
+            "logo": "./favicon.svg",
+            "image": "./og-image.svg",
             "description": "Розробка сайтів під ключ із вбудованою SEO-основою, фокусом на високу конверсію (CRO) та інтерактивним прорахунком вартості.",
             "telephone": "+380935938981",
             "priceRange": "$$$",
@@ -168,7 +191,7 @@
           },
           {
             "@type": "FAQPage",
-            "@id": "https://alexey436.github.io/Mintendo/#faq",
+            "@id": "./#faq",
             "mainEntity": [
               {
                 "@type": "Question",

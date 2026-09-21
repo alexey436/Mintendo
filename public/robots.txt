@@ -1,6 +1,6 @@
-# robots.txt for Mintendo Web Studio
+# robots.txt for Monvorge studio
 User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://alexey436.github.io/Mintendo/sitemap.xml
+Sitemap: /sitemap.xml
