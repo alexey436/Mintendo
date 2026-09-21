@@ -121,7 +121,8 @@ export const CasesSection: React.FC<CasesSectionProps> = ({
                   <button
                     onClick={() => setActiveCaseModal(item)}
                     className="p-2 rounded-lg bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-colors cursor-pointer"
-                    title="Детальніше про кейс"
+                    title={`Детальніше про кейс: ${item.title}`}
+                    aria-label={`Детальніше про кейс: ${item.title}`}
                   >
                     <ArrowUpRight className="w-5 h-5" />
                   </button>
@@ -201,6 +202,7 @@ export const CasesSection: React.FC<CasesSectionProps> = ({
               </div>
               <button
                 onClick={() => setActiveCaseModal(null)}
+                aria-label="Закрити модальне вікно кейсу"
                 className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors"
               >
                 ✕

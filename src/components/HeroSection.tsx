@@ -38,7 +38,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <div className="inline-flex flex-wrap items-center gap-1.5 sm:gap-2 px-3 py-1.5 rounded-full bg-slate-900/90 border border-emerald-500/30 text-emerald-400 text-[11px] sm:text-xs font-semibold tracking-wide w-fit mb-4 sm:mb-6 shadow-sm shadow-emerald-950">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
               <span>Студія веб-розробки • Mintendo</span>
-              <span className="text-slate-600">|</span>
+              <span aria-hidden="true" className="text-slate-500">|</span>
               <span className="text-slate-300">Гарантія результату та термінів</span>
             </div>
 

@@ -173,6 +173,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
         {/* Close Button */}
         <button
           onClick={onClose}
+          aria-label="Закрити модальне вікно"
           className="absolute top-5 right-5 p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
         >
           <X className="w-5 h-5" />
@@ -245,16 +246,17 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
 
             <form onSubmit={handleSubmit} noValidate className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                <label htmlFor="modal-client-name" className="block text-xs font-semibold text-slate-300 mb-1">
                   Ваше ім'я *
                 </label>
                 <input
+                  id="modal-client-name"
                   type="text"
                   placeholder="Олександр"
                   value={name}
                   onChange={(e) => handleNameChange(e.target.value)}
                   onBlur={handleNameBlur}
-                  className={`w-full px-4 py-2.5 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none transition-colors border ${
+                  className={`w-full px-4 py-2.5 rounded-xl text-white placeholder-slate-400 text-sm focus:outline-none transition-colors border ${
                     touched.name && errors.name
                       ? 'bg-rose-950/20 border-rose-500/80 focus:border-rose-400'
                       : touched.name && !errors.name && name.trim()
@@ -268,17 +270,17 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
                     <span>{errors.name}</span>
                   </p>
                 ) : (
-                  <p className="text-[10px] text-slate-500 mt-1">
+                  <p className="text-[11px] text-slate-400 mt-1">
                     Тільки букви (без цифр та спецсимволів)
                   </p>
                 )}
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                <span id="modal-channel-label" className="block text-xs font-semibold text-slate-300 mb-1">
                   Спосіб зв'язку
-                </label>
-                <div className="grid grid-cols-3 gap-2">
+                </span>
+                <div className="grid grid-cols-3 gap-2" role="group" aria-labelledby="modal-channel-label">
                   {[
                     { id: 'telegram', label: 'Telegram' },
                     { id: 'phone', label: 'Дзвінок' },
@@ -287,11 +289,12 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
                     <button
                       key={ch.id}
                       type="button"
+                      aria-pressed={channel === ch.id}
                       onClick={() => handleChannelChange(ch.id)}
                       className={`py-2 text-xs font-semibold rounded-lg border transition-all cursor-pointer ${
                         channel === ch.id
                           ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/50 shadow-sm'
-                          : 'bg-slate-800 text-slate-400 border-slate-700 hover:text-white'
+                          : 'bg-slate-800 text-slate-300 border-slate-700 hover:text-white'
                       }`}
                     >
                       {ch.label}
@@ -302,7 +305,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
 
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <label className="text-xs font-semibold text-slate-300">
+                  <label htmlFor="modal-client-contact" className="text-xs font-semibold text-slate-300">
                     {channel === 'telegram'
                       ? 'Telegram нікнейм або телефон *'
                       : channel === 'phone'
@@ -316,6 +319,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
                   )}
                 </div>
                 <input
+                  id="modal-client-contact"
                   type="text"
                   placeholder={
                     channel === 'telegram'
@@ -326,7 +330,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
                   onFocus={handleContactFocus}
                   onChange={(e) => handleContactChange(e.target.value)}
                   onBlur={handleContactBlur}
-                  className={`w-full px-4 py-2.5 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none transition-colors border font-mono ${
+                  className={`w-full px-4 py-2.5 rounded-xl text-white placeholder-slate-400 text-sm focus:outline-none transition-colors border font-mono ${
                     touched.contact && errors.contact
                       ? 'bg-rose-950/20 border-rose-500/80 focus:border-rose-400'
                       : touched.contact && !errors.contact && contact.trim() && contact !== '+380 '
@@ -349,7 +353,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
                     </span>
                   </p>
                 ) : (
-                  <p className="text-[10px] text-slate-500 mt-1">
+                  <p className="text-[11px] text-slate-400 mt-1">
                     {channel === 'telegram'
                       ? 'Введіть @нікнейм у Telegram або номер у форматі +380 (44) 123-12-31'
                       : 'Формат номеру: +380 (44) 123-12-31 (введіть 9 цифр після коду)'}
@@ -358,10 +362,11 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                <label htmlFor="modal-client-message" className="block text-xs font-semibold text-slate-300 mb-1">
                   Коротко про ваші задачі (необов'язково)
                 </label>
                 <textarea
+                  id="modal-client-message"
                   rows={2}
                   placeholder={
                     presetData?.projectType === 'Безкоштовний аудит сайту'
@@ -370,7 +375,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
                   }
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className="w-full px-4 py-2 rounded-xl bg-slate-800/80 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-emerald-500"
+                  className="w-full px-4 py-2 rounded-xl bg-slate-800/80 border border-slate-700 text-white placeholder-slate-400 text-sm focus:outline-none focus:border-emerald-500"
                 />
               </div>
 

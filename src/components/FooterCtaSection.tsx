@@ -230,16 +230,17 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                    <label htmlFor="footer-client-name" className="block text-xs font-semibold text-slate-300 mb-1.5">
                       Ваше ім'я *
                     </label>
                     <input
+                      id="footer-client-name"
                       type="text"
                       placeholder="Олексій"
                       value={formData.name}
                       onChange={(e) => handleNameChange(e.target.value)}
                       onBlur={handleNameBlur}
-                      className={`w-full px-4 py-3 rounded-xl text-white placeholder-slate-500 text-base sm:text-sm focus:outline-none transition-colors border ${
+                      className={`w-full px-4 py-3 rounded-xl text-white placeholder-slate-400 text-base sm:text-sm focus:outline-none transition-colors border ${
                         touched.name && errors.name
                           ? 'bg-rose-950/20 border-rose-500/80 focus:border-rose-400'
                           : touched.name && !errors.name && formData.name.trim()
@@ -253,7 +254,7 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
                         <span>{errors.name}</span>
                       </p>
                     ) : (
-                      <p className="text-[10px] text-slate-500 mt-1.5">
+                      <p className="text-[11px] text-slate-400 mt-1.5">
                         Тільки букви (без цифр та спецсимволів)
                       </p>
                     )}
@@ -261,7 +262,7 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
 
                   <div>
                     <div className="flex items-center justify-between mb-1.5">
-                      <label className="text-xs font-semibold text-slate-300">
+                      <label htmlFor="footer-client-contact" className="text-xs font-semibold text-slate-300">
                         {formData.preferredChannel === 'telegram'
                           ? 'Telegram нікнейм або телефон *'
                           : formData.preferredChannel === 'phone'
@@ -275,6 +276,7 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
                       )}
                     </div>
                     <input
+                      id="footer-client-contact"
                       type="text"
                       placeholder={
                         formData.preferredChannel === 'telegram'
@@ -285,7 +287,7 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
                       onFocus={handleContactFocus}
                       onChange={(e) => handleContactChange(e.target.value)}
                       onBlur={handleContactBlur}
-                      className={`w-full px-4 py-3 rounded-xl text-white placeholder-slate-500 text-base sm:text-sm focus:outline-none transition-colors border font-mono ${
+                      className={`w-full px-4 py-3 rounded-xl text-white placeholder-slate-400 text-base sm:text-sm focus:outline-none transition-colors border font-mono ${
                         touched.contact && errors.contact
                           ? 'bg-rose-950/20 border-rose-500/80 focus:border-rose-400'
                           : touched.contact && !errors.contact && formData.contact.trim() && formData.contact !== '+380 '
@@ -308,7 +310,7 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
                         </span>
                       </p>
                     ) : (
-                      <p className="text-[10px] text-slate-500 mt-1.5">
+                      <p className="text-[11px] text-slate-400 mt-1.5">
                         {formData.preferredChannel === 'telegram'
                           ? 'Введіть @нікнейм у Telegram або номер у форматі +380 (44) 123-12-31'
                           : 'Формат номеру: +380 (44) 123-12-31 (введіть 9 цифр після коду)'}
@@ -319,10 +321,11 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                    <label htmlFor="footer-project-type" className="block text-xs font-semibold text-slate-300 mb-1.5">
                       Тип сайту
                     </label>
                     <select
+                      id="footer-project-type"
                       value={formData.projectType}
                       onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
                       className="w-full px-4 py-3 rounded-xl bg-slate-800/80 border border-slate-700 text-white text-base sm:text-sm focus:outline-none focus:border-emerald-500 transition-colors"
@@ -337,10 +340,10 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                    <span id="footer-channel-label" className="block text-xs font-semibold text-slate-300 mb-1.5">
                       Зручний спосіб зв'язку
-                    </label>
-                    <div className="grid grid-cols-3 gap-2">
+                    </span>
+                    <div className="grid grid-cols-3 gap-2" role="group" aria-labelledby="footer-channel-label">
                       {[
                         { id: 'telegram', label: 'Telegram' },
                         { id: 'phone', label: 'Дзвінок' },
@@ -349,11 +352,12 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
                         <button
                           key={item.id}
                           type="button"
+                          aria-pressed={formData.preferredChannel === item.id}
                           onClick={() => handleChannelChange(item.id)}
                           className={`py-2.5 text-xs font-semibold rounded-lg border transition-all cursor-pointer ${
                             formData.preferredChannel === item.id
                               ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/50 shadow-sm'
-                              : 'bg-slate-800 text-slate-400 border-slate-700 hover:text-white'
+                              : 'bg-slate-800 text-slate-300 border-slate-700 hover:text-white'
                           }`}
                         >
                           {item.label}
@@ -364,15 +368,16 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                  <label htmlFor="footer-project-comment" className="block text-xs font-semibold text-slate-300 mb-1.5">
                     Коротко про проєкт або посилання на старий сайт (необов'язково)
                   </label>
                   <textarea
+                    id="footer-project-comment"
                     rows={3}
                     placeholder="Наприклад: інтернет-магазин одягу, потрібна оплата картами та інтеграція з CRM..."
                     value={formData.comment}
                     onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-xl bg-slate-800/80 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-emerald-500 transition-colors"
+                    className="w-full px-4 py-2.5 rounded-xl bg-slate-800/80 border border-slate-700 text-white placeholder-slate-400 text-sm focus:outline-none focus:border-emerald-500 transition-colors"
                   />
                 </div>
 
@@ -395,8 +400,8 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
                   )}
                 </button>
 
-                <div className="flex items-center justify-center gap-2 text-[11px] text-slate-500 text-center pt-2">
-                  <Lock className="w-3.5 h-3.5" />
+                <div className="flex items-center justify-center gap-2 text-xs text-slate-400 text-center pt-2">
+                  <Lock className="w-3.5 h-3.5 text-emerald-400" />
                   <span>Конфіденційність гарантовано. Жодного спаму чи нав'язливих дзвінків.</span>
                 </div>
               </form>
@@ -492,7 +497,7 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
         </div>
 
         {/* Bottom Copyright and Meta */}
-        <div className="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <div className="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
           <div className="flex items-center gap-2">
             <span className="font-bold text-slate-300 font-['Plus_Jakarta_Sans']">Mintendo Web Studio</span>
             <span>© {new Date().getFullYear()}. Усі права захищено.</span>
@@ -500,7 +505,7 @@ export const FooterCtaSection: React.FC<FooterCtaProps> = ({
           <div className="flex flex-wrap items-center justify-center sm:justify-end gap-4 sm:gap-6 text-slate-400">
             <span>Публічна оферта</span>
             <span>Політика конфіденційності</span>
-            <span className="text-emerald-500 font-mono">100% передача прав замовнику</span>
+            <span className="text-emerald-400 font-mono">100% передача прав замовнику</span>
           </div>
         </div>
 

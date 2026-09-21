@@ -89,9 +89,9 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ onOpenConsultation }) =>
                 <MessageSquare className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="text-sm sm:text-base font-bold text-white">
+                <h3 className="text-sm sm:text-base font-bold text-white">
                   Залишилося специфічне запитання щодо вашого проєкту?
-                </h4>
+                </h3>
                 <p className="text-xs text-slate-400">
                   Тімлід Mintendo відповість вам особисто протягом 15 хвилин.
                 </p>

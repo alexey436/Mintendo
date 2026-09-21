@@ -143,9 +143,9 @@ export const PainPointsSection: React.FC<PainPointsSectionProps> = ({
         <ScrollReveal direction="up" delay={0.08}>
           <div className="mt-10 sm:mt-12 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-slate-900 via-emerald-950/40 to-slate-900 border border-emerald-500/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
             <div>
-              <h4 className="text-base sm:text-lg font-bold text-white">
+              <h3 className="text-base sm:text-lg font-bold text-white">
                 Вже маєте гіркий досвід розробки або готовий непрацюючий сайт?
-              </h4>
+              </h3>
               <p className="text-xs sm:text-sm text-slate-300">
                 Проведемо безкоштовний аудит помилок UX/CRO та швидкості вашого сайту за 24 години.
               </p>

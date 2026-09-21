@@ -11,7 +11,17 @@ export default defineConfig(() => {
 
   return {
     base,
-    plugins: [react(), tailwindcss()],
+    plugins: [
+      react(),
+      tailwindcss(),
+      {
+        name: 'filter-html-preload',
+        transformIndexHtml(html) {
+          // Remove vendor-motion from critical initial HTML head preloads to maximize mobile PageSpeed
+          return html.replace(/<link rel="modulepreload"[^>]*vendor-motion[^>]*>\s*/g, '');
+        },
+      },
+    ],
     build: {
       target: 'esnext',
       cssMinify: true,

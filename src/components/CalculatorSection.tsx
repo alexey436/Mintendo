@@ -378,7 +378,7 @@ export const CalculatorSection: React.FC<CalculatorSectionProps> = ({
                             +${mod.price}
                           </span>
                         )}
-                        <div className="text-[10px] text-slate-500">
+                        <div className="text-[10px] text-slate-400">
                           {mod.days > 0 ? `+${mod.days} дні` : 'на 30 днів'}
                         </div>
                       </div>
