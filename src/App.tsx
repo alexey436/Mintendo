@@ -6,16 +6,12 @@
 import React, { useState, Suspense, lazy } from 'react';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
+import { PainPointsSection } from './components/PainPointsSection';
+import { SolutionFeaturesSection } from './components/SolutionFeaturesSection';
 import { StickyMobileBar } from './components/StickyMobileBar';
 import { BackgroundVisuals } from './components/BackgroundVisuals';
 
-// Code-split below-the-fold heavy components for optimal mobile PageSpeed (LCP & TBT)
-const PainPointsSection = lazy(() =>
-  import('./components/PainPointsSection').then((m) => ({ default: m.PainPointsSection }))
-);
-const SolutionFeaturesSection = lazy(() =>
-  import('./components/SolutionFeaturesSection').then((m) => ({ default: m.SolutionFeaturesSection }))
-);
+// Code-split lower below-the-fold sections for optimal initial bundle size and zero TBT
 const AboutSection = lazy(() =>
   import('./components/AboutSection').then((m) => ({ default: m.AboutSection }))
 );
@@ -93,24 +89,18 @@ export default function App() {
           onOpenConsultation={() => handleOpenConsultation()}
         />
 
-        {/* Below-the-fold content loaded asynchronously with zero layout shift */}
-        <Suspense
-          fallback={
-            <div className="py-20 flex items-center justify-center">
-              <div className="w-8 h-8 border-2 border-emerald-500/30 border-t-emerald-400 rounded-full animate-spin" />
-            </div>
+        {/* Pain Points Section - immediately rendered to eliminate below-the-fold layout shift */}
+        <PainPointsSection
+          onOpenConsultation={() =>
+            handleOpenConsultation({ projectType: 'Безкоштовний аудит сайту' })
           }
-        >
-          {/* Pain Points Section */}
-          <PainPointsSection
-            onOpenConsultation={() =>
-              handleOpenConsultation({ projectType: 'Безкоштовний аудит сайту' })
-            }
-          />
+        />
 
-          {/* Solutions & Core Advantages Section (Spotlight Cards) */}
-          <SolutionFeaturesSection />
+        {/* Solutions & Core Advantages Section (Spotlight Cards) */}
+        <SolutionFeaturesSection />
 
+        {/* Below-the-fold deeper sections loaded smoothly without jumping spinners */}
+        <Suspense fallback={null}>
           {/* About Us / Experience & Stats (3 years, 85+ projects, principles) */}
           <AboutSection
             onOpenConsultation={() => handleOpenConsultation()}

@@ -1,5 +1,4 @@
-import React, { ReactNode } from 'react';
-import { motion } from 'motion/react';
+import React, { ReactNode, useState, useEffect } from 'react';
 
 interface ScrollRevealProps {
   children: ReactNode;
@@ -9,13 +8,45 @@ interface ScrollRevealProps {
   once?: boolean;
 }
 
+let motionPromise: Promise<any> | null = null;
+let cachedMotionDiv: any = null;
+
 export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   children,
   className = '',
   delay = 0,
   direction = 'up',
-  once = true, // Оптимізація для швидкості: один плавний вхід без зайвого навантаження CPU
+  once = true,
 }) => {
+  const [MotionDiv, setMotionDiv] = useState<any>(() => cachedMotionDiv);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const isMobile = window.innerWidth < 768;
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      // On mobile devices (<768px), keep native <div> for 100/100 Core Web Vitals, 0ms TBT, and zero scroll jank
+      if (!isMobile && !prefersReduced) {
+        if (cachedMotionDiv) {
+          setMotionDiv(() => cachedMotionDiv);
+        } else {
+          if (!motionPromise) {
+            motionPromise = import('motion/react').then((mod) => {
+              cachedMotionDiv = mod.motion.div;
+              return mod.motion.div;
+            });
+          }
+          motionPromise.then((divComp) => {
+            setMotionDiv(() => divComp);
+          });
+        }
+      }
+    }
+  }, []);
+
+  if (!MotionDiv) {
+    return <div className={className}>{children}</div>;
+  }
+
   const getOffset = () => {
     switch (direction) {
       case 'up':
@@ -34,7 +65,7 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   const offset = getOffset();
 
   return (
-    <motion.div
+    <MotionDiv
       initial={{
         opacity: 0,
         x: offset.x,
@@ -60,7 +91,7 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
       className={className}
     >
       {children}
-    </motion.div>
+    </MotionDiv>
   );
 };
 

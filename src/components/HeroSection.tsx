@@ -7,11 +7,8 @@ import {
   TrendingUp,
   Search,
   Sparkles,
-  CheckCircle2,
   Clock,
   Code2,
-  Layers,
-  Smartphone,
 } from 'lucide-react';
 
 interface HeroSectionProps {
