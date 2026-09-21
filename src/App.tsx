@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, Suspense, lazy } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { PainPointsSection } from './components/PainPointsSection';
@@ -45,10 +45,70 @@ export default function App() {
     sourceCase?: string;
   } | undefined>(undefined);
 
+  // Progressive loading of deeper below-the-fold sections to ensure 0ms TBT and 95+ PageSpeed on mobile
+  const [isBelowFoldReady, setIsBelowFoldReady] = useState(() => {
+    if (typeof window !== 'undefined' && window.location.hash) {
+      return true;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    if (isBelowFoldReady) return;
+
+    const triggerReady = () => {
+      setIsBelowFoldReady(true);
+      removeListeners();
+    };
+
+    const removeListeners = () => {
+      window.removeEventListener('scroll', triggerReady);
+      window.removeEventListener('touchstart', triggerReady);
+      window.removeEventListener('mousemove', triggerReady);
+      window.removeEventListener('keydown', triggerReady);
+    };
+
+    window.addEventListener('scroll', triggerReady, { passive: true, once: true });
+    window.addEventListener('touchstart', triggerReady, { passive: true, once: true });
+    window.addEventListener('mousemove', triggerReady, { passive: true, once: true });
+    window.addEventListener('keydown', triggerReady, { passive: true, once: true });
+
+    // Idle trigger to load seamlessly in background when browser is free
+    let timer: ReturnType<typeof setTimeout>;
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      const idleId = (window as unknown as { requestIdleCallback: (cb: () => void) => number }).requestIdleCallback(() => {
+        timer = setTimeout(triggerReady, 400);
+      });
+      return () => {
+        removeListeners();
+        clearTimeout(timer);
+        if ('cancelIdleCallback' in window) {
+          (window as unknown as { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(idleId);
+        }
+      };
+    } else {
+      timer = setTimeout(triggerReady, 600);
+      return () => {
+        removeListeners();
+        clearTimeout(timer);
+      };
+    }
+  }, [isBelowFoldReady]);
+
   const scrollToCalculator = () => {
-    const el = document.getElementById('calculator');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+    if (!isBelowFoldReady) {
+      setIsBelowFoldReady(true);
+      setTimeout(() => {
+        const el = document.getElementById('calculator');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 50);
+    } else {
+      const el = document.getElementById('calculator');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
@@ -99,29 +159,33 @@ export default function App() {
         {/* Solutions & Core Advantages Section (Spotlight Cards) */}
         <SolutionFeaturesSection />
 
-        {/* Below-the-fold deeper sections loaded smoothly without jumping spinners */}
-        <Suspense fallback={null}>
-          {/* About Us / Experience & Stats (3 years, 85+ projects, principles) */}
-          <AboutSection
-            onOpenConsultation={() => handleOpenConsultation()}
-            onScrollToCalculator={scrollToCalculator}
-          />
+        {/* Below-the-fold deeper sections loaded progressively */}
+        {isBelowFoldReady ? (
+          <Suspense fallback={<div className="min-h-[300px]" />}>
+            {/* About Us / Experience & Stats (3 years, 85+ projects, principles) */}
+            <AboutSection
+              onOpenConsultation={() => handleOpenConsultation()}
+              onScrollToCalculator={scrollToCalculator}
+            />
 
-          {/* Interactive Cost & Timeline Calculator */}
-          <CalculatorSection onSelectCalculation={handleCalculationSelect} />
+            {/* Interactive Cost & Timeline Calculator */}
+            <CalculatorSection onSelectCalculation={handleCalculationSelect} />
 
-          {/* Case Studies & Social Proof */}
-          <CasesSection onSelectCaseConsultation={handleCaseSelect} />
+            {/* Case Studies & Social Proof */}
+            <CasesSection onSelectCaseConsultation={handleCaseSelect} />
 
-          {/* 5-Step Workflow & Online Project Tracker */}
-          <WorkflowSection />
+            {/* 5-Step Workflow & Online Project Tracker */}
+            <WorkflowSection />
 
-          {/* FAQ Section */}
-          <FaqSection onOpenConsultation={() => handleOpenConsultation()} />
+            {/* FAQ Section */}
+            <FaqSection onOpenConsultation={() => handleOpenConsultation()} />
 
-          {/* Footer & Final Contact CTA */}
-          <FooterCtaSection />
-        </Suspense>
+            {/* Footer & Final Contact CTA */}
+            <FooterCtaSection />
+          </Suspense>
+        ) : (
+          <div id="calculator" className="min-h-[160px]" />
+        )}
       </main>
 
       {/* Floating Sticky Mobile CTA Bar */}

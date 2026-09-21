@@ -87,8 +87,10 @@ export const CasesSection: React.FC<CasesSectionProps> = ({
                   alt={`Кейс розробки сайту Monvorge studio: ${item.title} – ${item.categoryLabel}`}
                   width={640}
                   height={360}
+                  sizes="(max-width: 768px) 100vw, 640px"
                   loading="lazy"
                   decoding="async"
+                  fetchPriority="low"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/40 to-transparent" />

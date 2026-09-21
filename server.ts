@@ -1,12 +1,10 @@
 import 'dotenv/config';
 import express from 'express';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import { createServer as createViteServer } from 'vite';
 import { validateName, validateContact } from './src/utils/validation';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const currentDir = typeof __dirname !== 'undefined' ? __dirname : process.cwd();
 
 const PORT = 3000;
 const TELEGRAM_BOT_TOKEN =
